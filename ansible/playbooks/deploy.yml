@@ -1,0 +1,7 @@
+---
+- name: Deploy custom AppDaemon applications to Home Assistant
+  hosts: all
+  gather_facts: false
+
+  roles:
+    - appdaemon

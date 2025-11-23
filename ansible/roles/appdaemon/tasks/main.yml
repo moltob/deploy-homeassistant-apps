@@ -1,0 +1,21 @@
+---
+- name: Deploy appdaemon.yaml configuration
+  ansible.builtin.copy:
+    src: appdaemon.yaml
+    dest: "{{ addon_configs_path }}/{{ appdaemon_addon_slug }}/appdaemon.yaml"
+    mode: '0644'
+  notify: Restart AppDaemon
+
+- name: Sync custom applications directory
+  ansible.posix.synchronize:
+    src: "{{ playbook_dir }}/../../src/apps/"
+    dest: "{{ addon_configs_path }}/{{ appdaemon_addon_slug }}/apps/"
+    delete: true
+    checksum: true
+    rsync_opts:
+      - "--exclude=__pycache__"
+      - "--exclude=scripts"
+      - "--exclude=.mypy_cache"
+      - "--exclude=.pytest_cache"
+      - "--exclude=.ruff_cache"
+  notify: Restart AppDaemon

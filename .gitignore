@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+.venv/
+venv/
+.python-version
+
+# Development tools
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Ansible
+ansible/*.retry
+.ansible/
+
+# Secrets
+secrets.yaml

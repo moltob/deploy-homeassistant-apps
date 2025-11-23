@@ -1,0 +1,215 @@
+dispatcher:
+  module: base
+  class: AppTriggerDispatcher
+
+# Simulate legacy action trigger entities as they were part of Z2M < 2.0.0 by specifying a map of a
+# (virtual, AD-internal) entity that is pupolated by evalutating the MQTT action topic.
+z2m_legacy_trigger:
+  module: base
+  class: Z2mLegacyTriggerApp
+  mappings:
+    - mqtt_device: Dressingroom Switch Lights Attic
+      entity: sensor.dressingroom_switch_lights_attic_action_sim
+    - mqtt_device: Livingroom Switch Floorlamps Couch
+      entity: sensor.livingroom_switch_floorlamps_couch_action_sim
+    - mqtt_device: Attic Switch Lights
+      entity: sensor.attic_switch_lights_action_sim
+    - mqtt_device: Diningroom Switch Lights
+      entity: sensor.diningroom_switch_lights_action_sim
+
+multi_toggle_attic_lights:
+  module: toggle
+  class: MultiLightToggleApp
+  dependencies: [dispatcher, z2m_legacy_trigger]
+  entities:
+    ent_switch: sensor.attic_switch_lights_action_sim
+    ent_lights:
+      - light.attic_balllight
+      - light.attic_lamp_shelf
+  actions:
+    single: "single"
+    double: "double"
+
+radiator_attic:
+  module: radiator
+  class: RadiatorApp
+  dependencies: dispatcher
+  entities:
+    ent_radiator: climate.attic_radiator
+    ent_temperature: sensor.attic_climate_temperature
+    ent_windows:
+      - binary_sensor.attic_window_contact
+      - binary_sensor.attic_window_2_contact
+    ent_time_comfort_start: input_datetime.attic_time_comfort_start
+    ent_time_comfort_stop: input_datetime.attic_time_comfort_stop
+    ent_temperature_comfort: input_number.attic_temperature_comfort
+    ent_temperature_eco: input_number.attic_temperature_eco
+
+radiator_bedroom_ben:
+  module: radiator
+  class: RadiatorApp
+  dependencies: dispatcher
+  entities:
+    ent_radiator: climate.bedroom_ben_radiator
+    ent_temperature: sensor.bedroom_ben_climate_temperature
+    ent_windows:
+      - binary_sensor.bedroom_ben_window_contact
+    ent_time_comfort_start: input_datetime.bedroom_ben_time_comfort_start
+    ent_time_comfort_stop: input_datetime.bedroom_ben_time_comfort_stop
+    ent_temperature_comfort: input_number.bedroom_ben_temperature_comfort
+    ent_temperature_eco: input_number.bedroom_ben_temperature_eco
+
+radiator_guestbath:
+  module: radiator
+  class: RadiatorApp
+  dependencies: dispatcher
+  entities:
+    ent_radiator: climate.guestbath_radiator
+    ent_temperature: sensor.guestbath_climate_temperature
+    ent_windows:
+      - binary_sensor.guestbath_window_contact
+    ent_time_comfort_start: input_datetime.guestbath_time_comfort_start
+    ent_time_comfort_stop: input_datetime.guestbath_time_comfort_stop
+    ent_temperature_comfort: input_number.guestbath_temperature_comfort
+    ent_temperature_eco: input_number.guestbath_temperature_eco
+  send_hvac_mode: true
+
+toggle_diningroom_light_left:
+  module: toggle
+  class: ActionToggleApp
+  dependencies: [dispatcher, z2m_legacy_trigger]
+  entities:
+    ent_sensor: sensor.diningroom_switch_lights_action_sim
+    ent_actuator: light.diningroom_light_left
+  sensor_action: single_left
+
+toggle_diningroom_light_right:
+  module: toggle
+  class: ActionToggleApp
+  dependencies: [dispatcher, z2m_legacy_trigger]
+  entities:
+    ent_sensor: sensor.diningroom_switch_lights_action_sim
+    ent_actuator: light.diningroom_light_right
+  sensor_action: single_right
+
+toggle_dressingroom_lamp_shelf:
+  module: toggle
+  class: ActionToggleApp
+  dependencies: [dispatcher, z2m_legacy_trigger]
+  entities:
+    ent_sensor: sensor.dressingroom_switch_lights_attic_action_sim
+    ent_actuator: light.attic_lamp_shelf
+  sensor_action: single_left
+
+toggle_dressingroom_balllight:
+  module: toggle
+  class: ActionToggleApp
+  dependencies: [dispatcher, z2m_legacy_trigger]
+  entities:
+    ent_sensor: sensor.dressingroom_switch_lights_attic_action_sim
+    ent_actuator: light.attic_balllight
+  sensor_action: single_right
+
+toggle_livingroom_floorlamps_couch:
+  module: toggle
+  class: ActionToggleApp
+  dependencies: [dispatcher, z2m_legacy_trigger]
+  entities:
+    ent_sensor: sensor.livingroom_switch_floorlamps_couch_action_sim
+    ent_actuator: light.livingroom_floorlamps_couch
+
+welcome_lights:
+  module: toggle
+  class: WelcomeLightApp
+  dependencies: dispatcher
+  constrain_start_time: sunset
+  constrain_end_time: sunrise
+  entities:
+    ent_light: light.livingroom_floorlamps_couch
+    ent_persons:
+      - person.britta_pagel
+      - person.mike_pagel
+
+dryer_observer:
+  module: power
+  class: PowerObserverApp
+  dependencies: dispatcher
+  entities:
+    ent_power: sensor.laundry_dryer_power
+  power:
+    active: 500
+    done: 10
+    duration_done: 1
+  notify:
+    service: mobile_app_all
+    title: Trocker
+    message: Der Trockner ist fertig.
+
+washer_observer:
+  module: power
+  class: PowerObserverApp
+  dependencies: dispatcher
+  entities:
+    ent_power: sensor.laundry_washer_power
+  power:
+    active: 1000
+    done: 7
+    duration_done: 1.5
+  notify:
+    service: mobile_app_all
+    title: Waschmaschine
+    message: Die Waschmaschine ist fertig (hoffe ich).
+
+timer_guestbath_light:
+  module: toggle
+  class: TimerApp
+  dependencies: dispatcher
+  entities:
+    ent_actuator: light.guestbath_light
+  minutes: 15
+
+timer_firstfloor_light:
+  module: toggle
+  class: TimerApp
+  dependencies: dispatcher
+  entities:
+    ent_actuator: light.first_floor_light
+  minutes: 3
+
+timer_groundfloor_light:
+  module: toggle
+  class: TimerApp
+  dependencies: dispatcher
+  entities:
+    ent_actuator: light.ground_floor_light
+  minutes: 10
+
+timer_guestroom_light_night_stand:
+  module: toggle
+  class: TimerApp
+  dependencies: dispatcher
+  entities:
+    ent_actuator: light.guestroom_lamp_nightstand
+  minutes: 120
+
+zigbee_availability_watchdog:
+  module: watchdog
+  class: NotifyOfflineApp
+  dependencies: dispatcher
+  notify:
+    service: mobile_app_s22_mike
+
+unifi_firewall_addressgroup_updater:
+  module: unifi
+  class: FirewallAddressGroupUpdaterApp
+  dependencies: dispatcher
+  entities:
+    ent_ipv6_address: sensor.ipv6_address_global
+  unifi:
+    url: https://unifi.erx.box
+    username: !secret UNIFI_USERNAME
+    password: !secret UNIFI_PASSWORD
+    # can be retrieved from user interface, when editing the address group:
+    address_group_id: 656c95620ccf831085f4ff42
+  notify:
+    service: mobile_app_s22_mike
