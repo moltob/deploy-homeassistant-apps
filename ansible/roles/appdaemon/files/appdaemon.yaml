@@ -1,4 +1,3 @@
----
 secrets: /homeassistant/secrets.yaml
 appdaemon:
   latitude: 48.123397

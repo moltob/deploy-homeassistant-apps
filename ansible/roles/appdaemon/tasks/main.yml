@@ -1,4 +1,3 @@
----
 - name: Deploy appdaemon.yaml configuration
   ansible.builtin.copy:
     src: appdaemon.yaml
