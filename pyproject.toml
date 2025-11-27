@@ -1,12 +1,9 @@
 [project]
-name = "apps"
+name = "homeassistant-apps"
 version = "0.1.0"
-description = "HA automations with AppDaemon"
-# pinned version: from https://github.com/hassio-addons/addon-appdaemon/blob/v0.17.4/appdaemon/Dockerfile
-requires-python = ">=3.12"
+description = "Homeassistant applications and configurations"
 dependencies = [
-    # from https://github.com/hassio-addons/addon-appdaemon/blob/v0.17.4/appdaemon/requirements.txt
-    "appdaemon==4.5.11",
+    "appdaemon-apps",
 ]
 
 [dependency-groups]
@@ -17,13 +14,15 @@ dev = [
     "ansible>=13.0.0",
 ]
 
+[tool.uv.sources]
+"appdaemon-apps" = { workspace = true }
+
 [tool.uv]
 # this is no package but a loose collection of files processed by AD:
 package = false
 
-# [build-system]
-# requires = ["hatchling"]
-# build-backend = "hatchling.build"
+[tool.uv.workspace]
+members = ["platforms/*"]
 
 [tool.ruff]
 line-length = 100
@@ -58,15 +57,15 @@ quote-style = "single"
 
 [tool.pyright]
 useLibraryCodeForTypes = true
-#include = ["bindings", "scripts"]
-exclude = ["**/node_modules", "**/__pycache__", "**/.venv"]
+include = ["platforms/**/*.py"]
+exclude = ["**/node_modules", "**/__pycache__"]
 deprecateTypingAliases = true
 reportAssertAlwaysTrue = true
 reportCallInDefaultInitializer = true
 reportConstantRedefinition = true
 reportDeprecated = true
 reportDuplicateImport = true
-# reportImplicitOverride = true                 # 3.12+
+reportImplicitOverride = true
 reportImplicitStringConcatenation = false       # we do this to split strings due to line length
 reportImportCycles = false                      # we do have cycles for type checking only
 reportIncompleteStub = true

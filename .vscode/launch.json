@@ -11,7 +11,7 @@
             "module": "appdaemon",
             "args": [
                 "--config",
-                "src",
+                "platforms/appdaemon-apps/src",
                 "-m",
                 "toggle_dressingroom_lamp_shelf",
                 "DEBUG",
