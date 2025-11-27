@@ -1,6 +1,7 @@
 """Toogle an entity after a switch was pushed."""
 
 import datetime
+import typing as t
 
 import appdaemon.entity
 
@@ -13,6 +14,7 @@ class ActionToggleApp(MyHomeAssistantApp):
     ent_sensor: appdaemon.entity.Entity
     ent_actuator: appdaemon.entity.Entity
 
+    @t.override
     async def initialize(self):
         await super().initialize()
 
@@ -42,6 +44,7 @@ class WelcomeLightApp(MyHomeAssistantApp):
     ent_light: appdaemon.entity.Entity
     ent_persons: list[appdaemon.entity.Entity]
 
+    @t.override
     async def initialize(self):
         await super().initialize()
 
@@ -72,6 +75,7 @@ class MultiLightToggleApp(MyHomeAssistantApp):
     ent_lights: list[appdaemon.entity.Entity]
     ent_switch: appdaemon.entity.Entity
 
+    @t.override
     async def initialize(self):
         await super().initialize()
 
@@ -134,6 +138,7 @@ class TimerApp(MyHomeAssistantApp):
     timeout: datetime.timedelta
     timeout_handle: str | None
 
+    @t.override
     async def initialize(self):
         await super().initialize()
 

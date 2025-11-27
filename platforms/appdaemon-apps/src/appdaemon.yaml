@@ -1,8 +1,8 @@
 appdaemon:
-  exclude_dirs:
-    - .venv
-    - apps/.venv
-    - config/apps/.venv
+  # exclude_dirs:
+  #   - .venv
+  #   - apps/.venv
+  #   - config/apps/.venv
   latitude: 52.379189
   longitude: 4.899431
   elevation: 2

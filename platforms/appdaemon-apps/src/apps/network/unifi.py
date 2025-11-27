@@ -2,6 +2,7 @@
 
 import base64
 import json
+import typing as t
 
 import aiohttp
 import appdaemon.entity
@@ -19,6 +20,7 @@ class FirewallAddressGroupUpdaterApp(MyHomeAssistantApp):
 
     ent_ipv6_address: appdaemon.entity.Entity
 
+    @t.override
     async def initialize(self):
         await super().initialize()
 

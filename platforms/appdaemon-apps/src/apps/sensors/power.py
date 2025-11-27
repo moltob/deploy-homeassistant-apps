@@ -2,6 +2,7 @@
 
 import datetime
 import enum
+import typing as t
 
 import appdaemon.entity
 
@@ -26,6 +27,7 @@ class PowerObserverApp(MyHomeAssistantApp):
 
     done_timer_handle: str | None
 
+    @t.override
     async def initialize(self):
         await super().initialize()
 
