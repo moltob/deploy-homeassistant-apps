@@ -56,6 +56,9 @@ lines-between-types = 1
 quote-style = "single"
 
 [tool.pyright]
+# mimic the funky import structure of HA:
+extraPaths = ["platforms/appdaemon-apps/src/apps"]
+
 useLibraryCodeForTypes = true
 include = ["platforms/**/*.py"]
 exclude = ["**/node_modules", "**/__pycache__"]
@@ -78,7 +81,6 @@ reportMatchNotExhaustive = true
 reportPrivateUsage = true
 reportPropertyTypeMismatch = true
 reportSelfClsParameterName = true
-reportShadowedImports = true
 reportTypeCommentUsage = true
 reportUnnecessaryCast = true
 reportUnnecessaryComparison = true

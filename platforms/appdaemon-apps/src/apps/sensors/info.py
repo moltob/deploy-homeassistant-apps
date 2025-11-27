@@ -1,6 +1,7 @@
 """Collect info about HA system and provide it as helper entities."""
 
 import datetime
+import typing as t
 
 import appdaemon.entity
 
@@ -16,6 +17,7 @@ class InfoApp(MyHomeAssistantApp):
 
     ent_batteries: appdaemon.entity.Entity
 
+    @t.override
     async def initialize(self):
         await super().initialize()
 

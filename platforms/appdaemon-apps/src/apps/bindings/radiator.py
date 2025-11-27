@@ -1,6 +1,7 @@
 """Basic radiator control through external temperature sensor."""
 
 import datetime
+import typing as t
 
 import appdaemon.entity
 
@@ -21,6 +22,7 @@ class RadiatorApp(MyHomeAssistantApp):
     min_temperature: int
     max_temperature: int
 
+    @t.override
     async def initialize(self):
         await super().initialize()
 
