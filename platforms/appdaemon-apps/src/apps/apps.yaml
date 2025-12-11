@@ -74,49 +74,49 @@ radiator_guestbath:
     ent_temperature_eco: input_number.guestbath_temperature_eco
   send_hvac_mode: true
 
-toggle_diningroom_light_left:
-  module: toggle
-  class: ActionToggleApp
-  dependencies: [dispatcher, z2m_legacy_trigger]
-  entities:
-    ent_sensor: sensor.diningroom_switch_lights_action_sim
-    ent_actuator: light.diningroom_light_left
-  sensor_action: single_left
+# toggle_diningroom_light_left:
+#   module: toggle
+#   class: ActionToggleApp
+#   dependencies: [dispatcher, z2m_legacy_trigger]
+#   entities:
+#     ent_sensor: sensor.diningroom_switch_lights_action_sim
+#     ent_actuator: light.diningroom_light_left
+#   sensor_action: single_left
 
-toggle_diningroom_light_right:
-  module: toggle
-  class: ActionToggleApp
-  dependencies: [dispatcher, z2m_legacy_trigger]
-  entities:
-    ent_sensor: sensor.diningroom_switch_lights_action_sim
-    ent_actuator: light.diningroom_light_right
-  sensor_action: single_right
+# toggle_diningroom_light_right:
+#   module: toggle
+#   class: ActionToggleApp
+#   dependencies: [dispatcher, z2m_legacy_trigger]
+#   entities:
+#     ent_sensor: sensor.diningroom_switch_lights_action_sim
+#     ent_actuator: light.diningroom_light_right
+#   sensor_action: single_right
 
-toggle_dressingroom_lamp_shelf:
-  module: toggle
-  class: ActionToggleApp
-  dependencies: [dispatcher, z2m_legacy_trigger]
-  entities:
-    ent_sensor: sensor.dressingroom_switch_lights_attic_action_sim
-    ent_actuator: light.attic_lamp_shelf
-  sensor_action: single_left
+# toggle_dressingroom_lamp_shelf:
+#   module: toggle
+#   class: ActionToggleApp
+#   dependencies: [dispatcher, z2m_legacy_trigger]
+#   entities:
+#     ent_sensor: sensor.dressingroom_switch_lights_attic_action_sim
+#     ent_actuator: light.attic_lamp_shelf
+#   sensor_action: single_left
 
-toggle_dressingroom_balllight:
-  module: toggle
-  class: ActionToggleApp
-  dependencies: [dispatcher, z2m_legacy_trigger]
-  entities:
-    ent_sensor: sensor.dressingroom_switch_lights_attic_action_sim
-    ent_actuator: light.attic_balllight
-  sensor_action: single_right
+# toggle_dressingroom_balllight:
+#   module: toggle
+#   class: ActionToggleApp
+#   dependencies: [dispatcher, z2m_legacy_trigger]
+#   entities:
+#     ent_sensor: sensor.dressingroom_switch_lights_attic_action_sim
+#     ent_actuator: light.attic_balllight
+#   sensor_action: single_right
 
-toggle_livingroom_floorlamps_couch:
-  module: toggle
-  class: ActionToggleApp
-  dependencies: [dispatcher, z2m_legacy_trigger]
-  entities:
-    ent_sensor: sensor.livingroom_switch_floorlamps_couch_action_sim
-    ent_actuator: light.livingroom_floorlamps_couch
+# toggle_livingroom_floorlamps_couch:
+#   module: toggle
+#   class: ActionToggleApp
+#   dependencies: [dispatcher, z2m_legacy_trigger]
+#   entities:
+#     ent_sensor: sensor.livingroom_switch_floorlamps_couch_action_sim
+#     ent_actuator: light.livingroom_floorlamps_couch
 
 welcome_lights:
   module: toggle
@@ -198,18 +198,17 @@ zigbee_availability_watchdog:
   dependencies: dispatcher
   notify:
     service: mobile_app_s22_mike
-
-unifi_firewall_addressgroup_updater:
-  module: unifi
-  class: FirewallAddressGroupUpdaterApp
-  dependencies: dispatcher
-  entities:
-    ent_ipv6_address: sensor.ipv6_address_global
-  unifi:
-    url: https://unifi.erx.box
-    username: !secret UNIFI_USERNAME
-    password: !secret UNIFI_PASSWORD
-    # can be retrieved from user interface, when editing the address group:
-    address_group_id: 656c95620ccf831085f4ff42
-  notify:
-    service: mobile_app_s22_mike
+# unifi_firewall_addressgroup_updater:
+#   module: unifi
+#   class: FirewallAddressGroupUpdaterApp
+#   dependencies: dispatcher
+#   entities:
+#     ent_ipv6_address: sensor.ipv6_address_global
+#   unifi:
+#     url: https://unifi.erx.box
+#     username: !secret UNIFI_USERNAME
+#     password: !secret UNIFI_PASSWORD
+#     # can be retrieved from user interface, when editing the address group:
+#     address_group_id: 656c95620ccf831085f4ff42
+#   notify:
+#     service: mobile_app_s22_mike
