@@ -34,10 +34,8 @@ blueprint:
 
 triggers:
   - domain: mqtt
-    # device_id: b0de852ccb87ed5b8c848dce8b1d7496
     device_id: !input switch
     type: action
-    # subtype: single_left
     subtype: !input action
     trigger: device
 
@@ -48,7 +46,6 @@ actions:
     metadata: {}
     data: {}
     target:
-      # entity_id: light.attic_lamp_shelf
       entity_id: !input light
 
 mode: single
