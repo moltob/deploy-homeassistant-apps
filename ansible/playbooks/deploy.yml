@@ -5,5 +5,7 @@
   roles:
     - role: homeassistant
       tags: homeassistant
+    - role: pyscript
+      tags: pyscript
     - role: appdaemon
       tags: appdaemon
