@@ -1,11 +1,19 @@
-from typing import Any, Literal
 from datetime import datetime
-from pyscript_builtins import StateVal
+from typing import Any, Literal
+
+from .pyscript_builtins import StateVal
+
 
 class assist_satellite:
-
     @staticmethod
-    def announce(*, entity_id: str, message: str='', media_id=None, preannounce: bool=True, preannounce_media_id=None):
+    def announce(
+        *,
+        entity_id: str,
+        message: str = '',
+        media_id=None,
+        preannounce: bool = True,
+        preannounce_media_id=None,
+    ):
         """
 
         Args:
@@ -14,7 +22,15 @@ class assist_satellite:
         ...
 
     @staticmethod
-    def start_conversation(*, entity_id: str, start_message: str='', start_media_id=None, extra_system_prompt: str | None=None, preannounce: bool=True, preannounce_media_id=None):
+    def start_conversation(
+        *,
+        entity_id: str,
+        start_message: str = '',
+        start_media_id=None,
+        extra_system_prompt: str | None = None,
+        preannounce: bool = True,
+        preannounce_media_id=None,
+    ):
         """
 
         Args:
@@ -23,12 +39,21 @@ class assist_satellite:
         ...
 
     @staticmethod
-    def ask_question(*, entity_id: str, question: str='', question_media_id=None, preannounce: bool=True, preannounce_media_id=None, answers: Any | None=None) -> dict[str, Any]:
+    def ask_question(
+        *,
+        entity_id: str,
+        question: str = '',
+        question_media_id=None,
+        preannounce: bool = True,
+        preannounce_media_id=None,
+        answers: Any | None = None,
+    ) -> dict[str, Any]:
         """
 
         Args:
             question:  Example: What kind of music would you like to play?"""
         ...
+
 
 class _automation_state(StateVal):
     current: int
@@ -36,17 +61,14 @@ class _automation_state(StateVal):
     last_triggered: datetime
     mode: str
 
-    def trigger(self, skip_condition: bool):
-        ...
+    def trigger(self, skip_condition: bool): ...
 
-    def toggle(self):
-        ...
+    def toggle(self): ...
 
-    def turn_on(self):
-        ...
+    def turn_on(self): ...
 
-    def turn_off(self, stop_actions: bool):
-        ...
+    def turn_off(self, stop_actions: bool): ...
+
 
 class automation:
     gardenlights: _automation_state
@@ -56,7 +78,7 @@ class automation:
     kaffeemaschine_ein_aus: _automation_state
 
     @staticmethod
-    def trigger(*, entity_id: str, skip_condition: bool=True):
+    def trigger(*, entity_id: str, skip_condition: bool = True):
         """
 
         Args:
@@ -80,7 +102,7 @@ class automation:
         ...
 
     @staticmethod
-    def turn_off(*, entity_id: str, stop_actions: bool=True):
+    def turn_off(*, entity_id: str, stop_actions: bool = True):
         """
 
         Args:
@@ -88,18 +110,18 @@ class automation:
         ...
 
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
+
 
 class backup:
-
     @staticmethod
-    def create_automatic():
-        ...
+    def create_automatic(): ...
+
 
 class _binary_sensor_state(StateVal):
     restored: bool
     supported_features: int
+
 
 class binary_sensor:
     rpi_power_status: _binary_sensor_state
@@ -146,15 +168,16 @@ class binary_sensor:
     attic_window_contact: _binary_sensor_state
     attic_window_battery_low: _binary_sensor_state
 
-class blueprint:
-    ...
+
+class blueprint: ...
+
 
 class _button_state(StateVal):
     restored: bool
     supported_features: int
 
-    def press(self):
-        ...
+    def press(self): ...
+
 
 class button:
     laundry_washer_reboot: _button_state
@@ -188,22 +211,19 @@ class button:
             entity_id: Entity ID"""
         ...
 
+
 class _camera_state(StateVal):
     access_token: str
     entity_picture: str
     supported_features: int
 
-    def enable_motion_detection(self):
-        ...
+    def enable_motion_detection(self): ...
 
-    def disable_motion_detection(self):
-        ...
+    def disable_motion_detection(self): ...
 
-    def turn_off(self):
-        ...
+    def turn_off(self): ...
 
-    def turn_on(self):
-        ...
+    def turn_on(self): ...
 
     def snapshot(self, filename: str):
         """
@@ -212,15 +232,15 @@ class _camera_state(StateVal):
             filename:  Example: /tmp/snapshot_{{ entity_id.name }}.jpg"""
         ...
 
-    def play_stream(self, *, media_player: str, format: Literal['', 'hls']='hls'):
-        ...
+    def play_stream(self, *, media_player: str, format: Literal['', 'hls'] = 'hls'): ...
 
-    def record(self, *, filename: str, duration: int=30, lookback: int=0):
+    def record(self, *, filename: str, duration: int = 30, lookback: int = 0):
         """
 
         Args:
             filename:  Example: /tmp/snapshot_{{ entity_id.name }}.mp4"""
         ...
+
 
 class camera:
     galaxy_tab_a7: _camera_state
@@ -267,7 +287,7 @@ class camera:
         ...
 
     @staticmethod
-    def play_stream(*, entity_id: str, media_player: str, format: Literal['', 'hls']='hls'):
+    def play_stream(*, entity_id: str, media_player: str, format: Literal['', 'hls'] = 'hls'):
         """
 
         Args:
@@ -275,13 +295,14 @@ class camera:
         ...
 
     @staticmethod
-    def record(*, entity_id: str, filename: str, duration: int=30, lookback: int=0):
+    def record(*, entity_id: str, filename: str, duration: int = 30, lookback: int = 0):
         """
 
         Args:
             entity_id: Entity ID
             filename:  Example: /tmp/snapshot_{{ entity_id.name }}.mp4"""
         ...
+
 
 class _climate_state(StateVal):
     current_temperature: float
@@ -294,17 +315,13 @@ class _climate_state(StateVal):
     target_temp_step: float
     temperature: float
 
-    def turn_on(self):
-        ...
+    def turn_on(self): ...
 
-    def turn_off(self):
-        ...
+    def turn_off(self): ...
 
-    def toggle(self):
-        ...
+    def toggle(self): ...
 
-    def set_hvac_mode(self, hvac_mode: str | None):
-        ...
+    def set_hvac_mode(self, hvac_mode: str | None): ...
 
     def set_preset_mode(self, preset_mode: str):
         """
@@ -313,11 +330,17 @@ class _climate_state(StateVal):
             preset_mode:  Example: away"""
         ...
 
-    def set_temperature(self, *, temperature: float | None=None, target_temp_high: float | None=None, target_temp_low: float | None=None, hvac_mode: Literal['', 'off', 'auto', 'cool', 'dry', 'fan_only', 'heat_cool', 'heat'] | None=None):
-        ...
+    def set_temperature(
+        self,
+        *,
+        temperature: float | None = None,
+        target_temp_high: float | None = None,
+        target_temp_low: float | None = None,
+        hvac_mode: Literal['', 'off', 'auto', 'cool', 'dry', 'fan_only', 'heat_cool', 'heat']
+        | None = None,
+    ): ...
 
-    def set_humidity(self, humidity: int):
-        ...
+    def set_humidity(self, humidity: int): ...
 
     def set_fan_mode(self, fan_mode: str):
         """
@@ -339,6 +362,7 @@ class _climate_state(StateVal):
         Args:
             swing_horizontal_mode:  Example: on"""
         ...
+
 
 class climate:
     attic_radiator: _climate_state
@@ -370,7 +394,7 @@ class climate:
         ...
 
     @staticmethod
-    def set_hvac_mode(*, entity_id: str, hvac_mode: str | None=None):
+    def set_hvac_mode(*, entity_id: str, hvac_mode: str | None = None):
         """
 
         Args:
@@ -387,7 +411,15 @@ class climate:
         ...
 
     @staticmethod
-    def set_temperature(*, entity_id: str, temperature: float | None=None, target_temp_high: float | None=None, target_temp_low: float | None=None, hvac_mode: Literal['', 'off', 'auto', 'cool', 'dry', 'fan_only', 'heat_cool', 'heat'] | None=None):
+    def set_temperature(
+        *,
+        entity_id: str,
+        temperature: float | None = None,
+        target_temp_high: float | None = None,
+        target_temp_low: float | None = None,
+        hvac_mode: Literal['', 'off', 'auto', 'cool', 'dry', 'fan_only', 'heat_cool', 'heat']
+        | None = None,
+    ):
         """
 
         Args:
@@ -429,26 +461,25 @@ class climate:
             swing_horizontal_mode:  Example: on"""
         ...
 
+
 class cloud:
+    @staticmethod
+    def remote_connect(): ...
 
     @staticmethod
-    def remote_connect():
-        ...
+    def remote_disconnect(): ...
 
-    @staticmethod
-    def remote_disconnect():
-        ...
 
 class command_line:
-
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
+
 
 class conversation:
-
     @staticmethod
-    def process(*, text: str, language: str | None=None, agent_id=None, conversation_id: str | None=None) -> dict[str, Any]:
+    def process(
+        *, text: str, language: str | None = None, agent_id=None, conversation_id: str | None = None
+    ) -> dict[str, Any]:
         """
 
         Args:
@@ -459,7 +490,7 @@ class conversation:
         ...
 
     @staticmethod
-    def reload(*, language: str | None=None, agent_id=None):
+    def reload(*, language: str | None = None, agent_id=None):
         """
 
         Args:
@@ -467,8 +498,8 @@ class conversation:
             agent_id:  Example: homeassistant"""
         ...
 
-class counter:
 
+class counter:
     @staticmethod
     def increment(*, entity_id: str):
         """
@@ -501,8 +532,8 @@ class counter:
             entity_id: Entity ID"""
         ...
 
-class cover:
 
+class cover:
     @staticmethod
     def open_cover(*, entity_id: str):
         """
@@ -583,6 +614,7 @@ class cover:
             entity_id: Entity ID"""
         ...
 
+
 class _device_tracker_state(StateVal):
     altitude: float
     battery_level: int
@@ -594,6 +626,7 @@ class _device_tracker_state(StateVal):
     speed: int
     vertical_accuracy: float | int
 
+
 class device_tracker:
     s22_mike: _device_tracker_state
     s21fe_britta: _device_tracker_state
@@ -602,7 +635,16 @@ class device_tracker:
     public_tablet: _device_tracker_state
 
     @staticmethod
-    def see(*, mac: str | None=None, dev_id: str | None=None, host_name: str | None=None, location_name: str | None=None, gps: Any | None=None, gps_accuracy: float | None=None, battery: int | None=None):
+    def see(
+        *,
+        mac: str | None = None,
+        dev_id: str | None = None,
+        host_name: str | None = None,
+        location_name: str | None = None,
+        gps: Any | None = None,
+        gps_accuracy: float | None = None,
+        battery: int | None = None,
+    ):
         """
 
         Args:
@@ -613,6 +655,7 @@ class device_tracker:
             gps:  Example: [51.509802, -0.086692]"""
         ...
 
+
 class _event_state(StateVal):
     backup_stage: Any
     domain: str
@@ -620,6 +663,7 @@ class _event_state(StateVal):
     event_types: list
     failed_reason: Any
     issue_id: str
+
 
 class event:
     shelly_1l_04_channel_1: _event_state
@@ -629,10 +673,10 @@ class event:
     repair: _event_state
     backup_automatisches_backup: _event_state
 
-class fan:
 
+class fan:
     @staticmethod
-    def turn_on(*, entity_id: str, percentage: int | None=None, preset_mode: str | None=None):
+    def turn_on(*, entity_id: str, percentage: int | None = None, preset_mode: str | None = None):
         """
 
         Args:
@@ -657,7 +701,7 @@ class fan:
         ...
 
     @staticmethod
-    def increase_speed(*, entity_id: str, percentage_step: int | None=None):
+    def increase_speed(*, entity_id: str, percentage_step: int | None = None):
         """
 
         Args:
@@ -665,7 +709,7 @@ class fan:
         ...
 
     @staticmethod
-    def decrease_speed(*, entity_id: str, percentage_step: int | None=None):
+    def decrease_speed(*, entity_id: str, percentage_step: int | None = None):
         """
 
         Args:
@@ -705,24 +749,23 @@ class fan:
             preset_mode:  Example: auto"""
         ...
 
+
 class ffmpeg:
+    @staticmethod
+    def start(*, entity_id: str | None = None): ...
 
     @staticmethod
-    def start(*, entity_id: str | None=None):
-        ...
+    def stop(*, entity_id: str | None = None): ...
 
     @staticmethod
-    def stop(*, entity_id: str | None=None):
-        ...
+    def restart(*, entity_id: str | None = None): ...
 
-    @staticmethod
-    def restart(*, entity_id: str | None=None):
-        ...
 
 class file:
-
     @staticmethod
-    def read_file(*, file_name: str | None=None, file_encoding: Literal['', 'JSON', 'YAML'] | None=None) -> dict[str, Any]:
+    def read_file(
+        *, file_name: str | None = None, file_encoding: Literal['', 'JSON', 'YAML'] | None = None
+    ) -> dict[str, Any]:
         """
 
         Args:
@@ -730,10 +773,10 @@ class file:
             file_encoding:  Example: JSON"""
         ...
 
-class frontend:
 
+class frontend:
     @staticmethod
-    def set_theme(*, name, mode: Literal['', 'dark', 'light']='light'):
+    def set_theme(*, name, mode: Literal['', 'dark', 'light'] = 'light'):
         """
 
         Args:
@@ -741,11 +784,10 @@ class frontend:
         ...
 
     @staticmethod
-    def reload_themes():
-        ...
+    def reload_themes(): ...
+
 
 class fully_kiosk:
-
     @staticmethod
     def load_url(*, device_id, url: str):
         """
@@ -771,14 +813,22 @@ class fully_kiosk:
             value:  Example: 90"""
         ...
 
+
 class group:
+    @staticmethod
+    def reload(): ...
 
     @staticmethod
-    def reload():
-        ...
-
-    @staticmethod
-    def set(*, object_id: str, name: str | None=None, icon: str | None=None, entities: str | None=None, add_entities: str | None=None, remove_entities: str | None=None, all: bool | None=None):
+    def set(
+        *,
+        object_id: str,
+        name: str | None = None,
+        icon: str | None = None,
+        entities: str | None = None,
+        add_entities: str | None = None,
+        remove_entities: str | None = None,
+        all: bool | None = None,
+    ):
         """
 
         Args:
@@ -798,8 +848,8 @@ class group:
             object_id:  Example: test_group"""
         ...
 
-class hassio:
 
+class hassio:
     @staticmethod
     def addon_start(*, addon):
         """
@@ -833,15 +883,20 @@ class hassio:
         ...
 
     @staticmethod
-    def host_shutdown():
-        ...
+    def host_shutdown(): ...
 
     @staticmethod
-    def host_reboot():
-        ...
+    def host_reboot(): ...
 
     @staticmethod
-    def backup_full(*, name: str | None=None, password: str | None=None, compressed: bool=True, location=None, homeassistant_exclude_database: bool=False):
+    def backup_full(
+        *,
+        name: str | None = None,
+        password: str | None = None,
+        compressed: bool = True,
+        location=None,
+        homeassistant_exclude_database: bool = False,
+    ):
         """
 
         Args:
@@ -851,7 +906,17 @@ class hassio:
         ...
 
     @staticmethod
-    def backup_partial(*, homeassistant: bool | None=None, homeassistant_exclude_database: bool=False, addons: Any | None=None, folders: Any | None=None, name: str | None=None, password: str | None=None, compressed: bool=True, location=None):
+    def backup_partial(
+        *,
+        homeassistant: bool | None = None,
+        homeassistant_exclude_database: bool = False,
+        addons: Any | None = None,
+        folders: Any | None = None,
+        name: str | None = None,
+        password: str | None = None,
+        compressed: bool = True,
+        location=None,
+    ):
         """
 
         Args:
@@ -863,7 +928,7 @@ class hassio:
         ...
 
     @staticmethod
-    def restore_full(*, slug: str, password: str | None=None):
+    def restore_full(*, slug: str, password: str | None = None):
         """
 
         Args:
@@ -871,7 +936,14 @@ class hassio:
         ...
 
     @staticmethod
-    def restore_partial(*, slug: str, homeassistant: bool | None=None, folders: Any | None=None, addons: Any | None=None, password: str | None=None):
+    def restore_partial(
+        *,
+        slug: str,
+        homeassistant: bool | None = None,
+        folders: Any | None = None,
+        addons: Any | None = None,
+        password: str | None = None,
+    ):
         """
 
         Args:
@@ -880,11 +952,10 @@ class hassio:
             password:  Example: password"""
         ...
 
-class homeassistant:
 
+class homeassistant:
     @staticmethod
-    def save_persistent_states():
-        ...
+    def save_persistent_states(): ...
 
     @staticmethod
     def turn_off(*, entity_id: str):
@@ -911,23 +982,19 @@ class homeassistant:
         ...
 
     @staticmethod
-    def stop():
-        ...
+    def stop(): ...
 
     @staticmethod
-    def check_config():
-        ...
+    def check_config(): ...
 
     @staticmethod
-    def update_entity(*, entity_id: str):
-        ...
+    def update_entity(*, entity_id: str): ...
 
     @staticmethod
-    def reload_core_config():
-        ...
+    def reload_core_config(): ...
 
     @staticmethod
-    def set_location(*, latitude: float, longitude: float, elevation: float | None=None):
+    def set_location(*, latitude: float, longitude: float, elevation: float | None = None):
         """
 
         Args:
@@ -937,11 +1004,10 @@ class homeassistant:
         ...
 
     @staticmethod
-    def reload_custom_templates():
-        ...
+    def reload_custom_templates(): ...
 
     @staticmethod
-    def reload_config_entry(*, entity_id: str, entry_id: str | None=None):
+    def reload_config_entry(*, entity_id: str, entry_id: str | None = None):
         """
 
         Args:
@@ -950,8 +1016,7 @@ class homeassistant:
         ...
 
     @staticmethod
-    def reload_all():
-        ...
+    def reload_all(): ...
 
     @staticmethod
     def remove_label_from_entity(*, label_id, entity_id: str):
@@ -1074,7 +1139,7 @@ class homeassistant:
         ...
 
     @staticmethod
-    def ignore_all_discovered(*, domain: str | None=None):
+    def ignore_all_discovered(*, domain: str | None = None):
         """Ignore all currently discovered devices that are shown on the integrations dashboard. This will not ignore devices that are discovered after this.
 
         Args:
@@ -1140,7 +1205,39 @@ class homeassistant:
         ...
 
     @staticmethod
-    def create_label(*, name: str, description: str, icon: str | None=None, color: Literal['', 'primary', 'accent', 'disabled', 'red', 'pink', 'purple', 'deep_purple', 'indigo', 'blue', 'light_blue', 'cyan', 'teal', 'green', 'light_green', 'lime', 'yellow', 'orange', 'deep_orange', 'brown', 'grey', 'blue_grey', 'black', 'white'] | None=None):
+    def create_label(
+        *,
+        name: str,
+        description: str,
+        icon: str | None = None,
+        color: Literal[
+            '',
+            'primary',
+            'accent',
+            'disabled',
+            'red',
+            'pink',
+            'purple',
+            'deep_purple',
+            'indigo',
+            'blue',
+            'light_blue',
+            'cyan',
+            'teal',
+            'green',
+            'light_green',
+            'lime',
+            'yellow',
+            'orange',
+            'deep_orange',
+            'brown',
+            'grey',
+            'blue_grey',
+            'black',
+            'white',
+        ]
+        | None = None,
+    ):
         """Creates a new label on the fly.
 
         Args:
@@ -1151,7 +1248,13 @@ class homeassistant:
         ...
 
     @staticmethod
-    def create_floor(*, name: str, icon: str | None=None, level: float | None=None, aliases: Any | None=None):
+    def create_floor(
+        *,
+        name: str,
+        icon: str | None = None,
+        level: float | None = None,
+        aliases: Any | None = None,
+    ):
         """Creates a new floor on the fly.
 
         Args:
@@ -1162,7 +1265,7 @@ class homeassistant:
         ...
 
     @staticmethod
-    def restart(*, safe_mode: bool | None=None, force: bool | None=None):
+    def restart(*, safe_mode: bool | None = None, force: bool | None = None):
         """Restart the Home Assistant action.
 
         Args:
@@ -1245,7 +1348,7 @@ class homeassistant:
     @staticmethod
     def delete_all_orphaned_entities():
         """Deletes all orphaned entities that no longer have an integration that claim/provide them. Please note, if the integration was just removed, it might need a restart for Home Assistant to realize they are orphaned.
-**WARNING** Entities might have been marked orphaned because an integration is offline or not working since Home Assistant started. Calling this action will delete those entities as well."""
+        **WARNING** Entities might have been marked orphaned because an integration is offline or not working since Home Assistant started. Calling this action will delete those entities as well."""
         ...
 
     @staticmethod
@@ -1258,7 +1361,7 @@ class homeassistant:
         ...
 
     @staticmethod
-    def create_area(*, name: str, icon: str | None=None, aliases: Any | None=None):
+    def create_area(*, name: str, icon: str | None = None, aliases: Any | None = None):
         """Creates a new area on the fly.
 
         Args:
@@ -1294,6 +1397,7 @@ class homeassistant:
             entity_id: The ID of the entity (or entities) to add to the area."""
         ...
 
+
 class _image_state(StateVal):
     access_token: str
     entity_picture: str
@@ -1304,6 +1408,7 @@ class _image_state(StateVal):
         Args:
             filename:  Example: /tmp/image_snapshot.jpg"""
         ...
+
 
 class image:
     galaxy_tab_a7_bildschirmfoto: _image_state
@@ -1317,17 +1422,16 @@ class image:
             filename:  Example: /tmp/image_snapshot.jpg"""
         ...
 
+
 class _input_boolean_state(StateVal):
     editable: bool
 
-    def turn_on(self):
-        ...
+    def turn_on(self): ...
 
-    def turn_off(self):
-        ...
+    def turn_off(self): ...
 
-    def toggle(self):
-        ...
+    def toggle(self): ...
+
 
 class _input_datetime_state(StateVal):
     editable: bool
@@ -1338,7 +1442,14 @@ class _input_datetime_state(StateVal):
     second: int
     timestamp: int
 
-    def set_datetime(self, *, date: str | None=None, time: str | None=None, datetime: str | None=None, timestamp: float | None=None):
+    def set_datetime(
+        self,
+        *,
+        date: str | None = None,
+        time: str | None = None,
+        datetime: str | None = None,
+        timestamp: float | None = None,
+    ):
         '''
 
         Args:
@@ -1346,6 +1457,7 @@ class _input_datetime_state(StateVal):
             time:  Example: "05:04:20"
             datetime:  Example: "2019-04-20 05:04:20"'''
         ...
+
 
 class _input_number_state(StateVal):
     editable: bool
@@ -1356,8 +1468,7 @@ class _input_number_state(StateVal):
     step: float
     unit_of_measurement: str
 
-    def set_value(self, value: float):
-        ...
+    def set_value(self, value: float): ...
 
     def max(self):
         """Set an input number entity to its maximum value."""
@@ -1381,12 +1492,12 @@ class _input_number_state(StateVal):
             amount: The amount to decrease the input number with. If not provided, the step of the number entity will be used."""
         ...
 
+
 class input_boolean:
     coffeemaker_timer_enabled: _input_boolean_state
 
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
 
     @staticmethod
     def turn_on(*, entity_id: str):
@@ -1412,11 +1523,10 @@ class input_boolean:
             entity_id: Entity ID"""
         ...
 
-class input_button:
 
+class input_button:
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
 
     @staticmethod
     def press(*, entity_id: str):
@@ -1425,6 +1535,7 @@ class input_button:
         Args:
             entity_id: Entity ID"""
         ...
+
 
 class input_datetime:
     attic_time_comfort_stop: _input_datetime_state
@@ -1436,11 +1547,17 @@ class input_datetime:
     bedroom_ben_time_comfort_stop: _input_datetime_state
 
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
 
     @staticmethod
-    def set_datetime(*, entity_id: str, date: str | None=None, time: str | None=None, datetime: str | None=None, timestamp: float | None=None):
+    def set_datetime(
+        *,
+        entity_id: str,
+        date: str | None = None,
+        time: str | None = None,
+        datetime: str | None = None,
+        timestamp: float | None = None,
+    ):
         '''
 
         Args:
@@ -1449,6 +1566,7 @@ class input_datetime:
             time:  Example: "05:04:20"
             datetime:  Example: "2019-04-20 05:04:20"'''
         ...
+
 
 class input_number:
     attic_temperature_comfort: _input_number_state
@@ -1459,8 +1577,7 @@ class input_number:
     bedroom_ben_temperature_eco: _input_number_state
 
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
 
     @staticmethod
     def set_value(*, entity_id: str, value: float):
@@ -1487,7 +1604,7 @@ class input_number:
         ...
 
     @staticmethod
-    def increment(*, entity_id: str, amount: float | None=None):
+    def increment(*, entity_id: str, amount: float | None = None):
         """Increase an input number entity value by a certain amount.
 
         Args:
@@ -1496,7 +1613,7 @@ class input_number:
         ...
 
     @staticmethod
-    def decrement(*, entity_id: str, amount: float | None=None):
+    def decrement(*, entity_id: str, amount: float | None = None):
         """Decrease an input number entity value by a certain amount.
 
         Args:
@@ -1504,11 +1621,10 @@ class input_number:
             amount: The amount to decrease the input number with. If not provided, the step of the number entity will be used."""
         ...
 
-class input_select:
 
+class input_select:
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
 
     @staticmethod
     def select_first(*, entity_id: str):
@@ -1527,7 +1643,7 @@ class input_select:
         ...
 
     @staticmethod
-    def select_next(*, entity_id: str, cycle: bool=True):
+    def select_next(*, entity_id: str, cycle: bool = True):
         """
 
         Args:
@@ -1544,7 +1660,7 @@ class input_select:
         ...
 
     @staticmethod
-    def select_previous(*, entity_id: str, cycle: bool=True):
+    def select_previous(*, entity_id: str, cycle: bool = True):
         """
 
         Args:
@@ -1561,7 +1677,7 @@ class input_select:
         ...
 
     @staticmethod
-    def random(*, entity_id: str, options: Any | None=None):
+    def random(*, entity_id: str, options: Any | None = None):
         """Select an random option for an input_select entity.
 
         Args:
@@ -1585,11 +1701,10 @@ class input_select:
             entity_id: Entity ID"""
         ...
 
-class input_text:
 
+class input_text:
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
 
     @staticmethod
     def set_value(*, entity_id: str, value: str):
@@ -1600,6 +1715,7 @@ class input_text:
             value:  Example: This is an example text"""
         ...
 
+
 class _light_state(StateVal):
     brightness: Any
     color_mode: str
@@ -1608,7 +1724,178 @@ class _light_state(StateVal):
     supported_color_modes: list
     supported_features: int
 
-    def turn_on(self, *, transition: int | None=None, rgb_color: tuple[int, int, int] | None=None, color_temp_kelvin: int | None=None, brightness_pct: int | None=None, brightness_step_pct: int | None=None, effect: str | None=None, rgbw_color: Any | None=None, rgbww_color: Any | None=None, color_name: Literal['', 'homeassistant', 'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'fuchsia', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'lime', 'limegreen', 'linen', 'magenta', 'maroon', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'navy', 'navyblue', 'oldlace', 'olive', 'olivedrab', 'orange', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'purple', 'red', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'silver', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'white', 'whitesmoke', 'yellow', 'yellowgreen'] | None=None, hs_color: Any | None=None, xy_color: Any | None=None, color_temp: int | None=None, brightness: int | None=None, brightness_step: int | None=None, white=None, profile: str | None=None, flash: Literal['', 'long', 'short'] | None=None):
+    def turn_on(
+        self,
+        *,
+        transition: int | None = None,
+        rgb_color: tuple[int, int, int] | None = None,
+        color_temp_kelvin: int | None = None,
+        brightness_pct: int | None = None,
+        brightness_step_pct: int | None = None,
+        effect: str | None = None,
+        rgbw_color: Any | None = None,
+        rgbww_color: Any | None = None,
+        color_name: Literal[
+            '',
+            'homeassistant',
+            'aliceblue',
+            'antiquewhite',
+            'aqua',
+            'aquamarine',
+            'azure',
+            'beige',
+            'bisque',
+            'blanchedalmond',
+            'blue',
+            'blueviolet',
+            'brown',
+            'burlywood',
+            'cadetblue',
+            'chartreuse',
+            'chocolate',
+            'coral',
+            'cornflowerblue',
+            'cornsilk',
+            'crimson',
+            'cyan',
+            'darkblue',
+            'darkcyan',
+            'darkgoldenrod',
+            'darkgray',
+            'darkgreen',
+            'darkgrey',
+            'darkkhaki',
+            'darkmagenta',
+            'darkolivegreen',
+            'darkorange',
+            'darkorchid',
+            'darkred',
+            'darksalmon',
+            'darkseagreen',
+            'darkslateblue',
+            'darkslategray',
+            'darkslategrey',
+            'darkturquoise',
+            'darkviolet',
+            'deeppink',
+            'deepskyblue',
+            'dimgray',
+            'dimgrey',
+            'dodgerblue',
+            'firebrick',
+            'floralwhite',
+            'forestgreen',
+            'fuchsia',
+            'gainsboro',
+            'ghostwhite',
+            'gold',
+            'goldenrod',
+            'gray',
+            'green',
+            'greenyellow',
+            'grey',
+            'honeydew',
+            'hotpink',
+            'indianred',
+            'indigo',
+            'ivory',
+            'khaki',
+            'lavender',
+            'lavenderblush',
+            'lawngreen',
+            'lemonchiffon',
+            'lightblue',
+            'lightcoral',
+            'lightcyan',
+            'lightgoldenrodyellow',
+            'lightgray',
+            'lightgreen',
+            'lightgrey',
+            'lightpink',
+            'lightsalmon',
+            'lightseagreen',
+            'lightskyblue',
+            'lightslategray',
+            'lightslategrey',
+            'lightsteelblue',
+            'lightyellow',
+            'lime',
+            'limegreen',
+            'linen',
+            'magenta',
+            'maroon',
+            'mediumaquamarine',
+            'mediumblue',
+            'mediumorchid',
+            'mediumpurple',
+            'mediumseagreen',
+            'mediumslateblue',
+            'mediumspringgreen',
+            'mediumturquoise',
+            'mediumvioletred',
+            'midnightblue',
+            'mintcream',
+            'mistyrose',
+            'moccasin',
+            'navajowhite',
+            'navy',
+            'navyblue',
+            'oldlace',
+            'olive',
+            'olivedrab',
+            'orange',
+            'orangered',
+            'orchid',
+            'palegoldenrod',
+            'palegreen',
+            'paleturquoise',
+            'palevioletred',
+            'papayawhip',
+            'peachpuff',
+            'peru',
+            'pink',
+            'plum',
+            'powderblue',
+            'purple',
+            'red',
+            'rosybrown',
+            'royalblue',
+            'saddlebrown',
+            'salmon',
+            'sandybrown',
+            'seagreen',
+            'seashell',
+            'sienna',
+            'silver',
+            'skyblue',
+            'slateblue',
+            'slategray',
+            'slategrey',
+            'snow',
+            'springgreen',
+            'steelblue',
+            'tan',
+            'teal',
+            'thistle',
+            'tomato',
+            'turquoise',
+            'violet',
+            'wheat',
+            'white',
+            'whitesmoke',
+            'yellow',
+            'yellowgreen',
+        ]
+        | None = None,
+        hs_color: Any | None = None,
+        xy_color: Any | None = None,
+        color_temp: int | None = None,
+        brightness: int | None = None,
+        brightness_step: int | None = None,
+        white=None,
+        profile: str | None = None,
+        flash: Literal['', 'long', 'short'] | None = None,
+    ):
         """
 
         Args:
@@ -1620,10 +1907,180 @@ class _light_state(StateVal):
             profile:  Example: relax"""
         ...
 
-    def turn_off(self, *, transition: int | None=None, flash: Literal['', 'long', 'short'] | None=None):
-        ...
+    def turn_off(
+        self, *, transition: int | None = None, flash: Literal['', 'long', 'short'] | None = None
+    ): ...
 
-    def toggle(self, *, transition: int | None=None, rgb_color: tuple[int, int, int] | None=None, color_temp_kelvin: int | None=None, brightness_pct: int | None=None, effect: str | None=None, rgbw_color: Any | None=None, rgbww_color: Any | None=None, color_name: Literal['', 'homeassistant', 'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'fuchsia', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'lime', 'limegreen', 'linen', 'magenta', 'maroon', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'navy', 'navyblue', 'oldlace', 'olive', 'olivedrab', 'orange', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'purple', 'red', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'silver', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'white', 'whitesmoke', 'yellow', 'yellowgreen'] | None=None, hs_color: Any | None=None, xy_color: Any | None=None, color_temp: int | None=None, brightness: int | None=None, white=None, profile: str | None=None, flash: Literal['', 'long', 'short'] | None=None):
+    def toggle(
+        self,
+        *,
+        transition: int | None = None,
+        rgb_color: tuple[int, int, int] | None = None,
+        color_temp_kelvin: int | None = None,
+        brightness_pct: int | None = None,
+        effect: str | None = None,
+        rgbw_color: Any | None = None,
+        rgbww_color: Any | None = None,
+        color_name: Literal[
+            '',
+            'homeassistant',
+            'aliceblue',
+            'antiquewhite',
+            'aqua',
+            'aquamarine',
+            'azure',
+            'beige',
+            'bisque',
+            'blanchedalmond',
+            'blue',
+            'blueviolet',
+            'brown',
+            'burlywood',
+            'cadetblue',
+            'chartreuse',
+            'chocolate',
+            'coral',
+            'cornflowerblue',
+            'cornsilk',
+            'crimson',
+            'cyan',
+            'darkblue',
+            'darkcyan',
+            'darkgoldenrod',
+            'darkgray',
+            'darkgreen',
+            'darkgrey',
+            'darkkhaki',
+            'darkmagenta',
+            'darkolivegreen',
+            'darkorange',
+            'darkorchid',
+            'darkred',
+            'darksalmon',
+            'darkseagreen',
+            'darkslateblue',
+            'darkslategray',
+            'darkslategrey',
+            'darkturquoise',
+            'darkviolet',
+            'deeppink',
+            'deepskyblue',
+            'dimgray',
+            'dimgrey',
+            'dodgerblue',
+            'firebrick',
+            'floralwhite',
+            'forestgreen',
+            'fuchsia',
+            'gainsboro',
+            'ghostwhite',
+            'gold',
+            'goldenrod',
+            'gray',
+            'green',
+            'greenyellow',
+            'grey',
+            'honeydew',
+            'hotpink',
+            'indianred',
+            'indigo',
+            'ivory',
+            'khaki',
+            'lavender',
+            'lavenderblush',
+            'lawngreen',
+            'lemonchiffon',
+            'lightblue',
+            'lightcoral',
+            'lightcyan',
+            'lightgoldenrodyellow',
+            'lightgray',
+            'lightgreen',
+            'lightgrey',
+            'lightpink',
+            'lightsalmon',
+            'lightseagreen',
+            'lightskyblue',
+            'lightslategray',
+            'lightslategrey',
+            'lightsteelblue',
+            'lightyellow',
+            'lime',
+            'limegreen',
+            'linen',
+            'magenta',
+            'maroon',
+            'mediumaquamarine',
+            'mediumblue',
+            'mediumorchid',
+            'mediumpurple',
+            'mediumseagreen',
+            'mediumslateblue',
+            'mediumspringgreen',
+            'mediumturquoise',
+            'mediumvioletred',
+            'midnightblue',
+            'mintcream',
+            'mistyrose',
+            'moccasin',
+            'navajowhite',
+            'navy',
+            'navyblue',
+            'oldlace',
+            'olive',
+            'olivedrab',
+            'orange',
+            'orangered',
+            'orchid',
+            'palegoldenrod',
+            'palegreen',
+            'paleturquoise',
+            'palevioletred',
+            'papayawhip',
+            'peachpuff',
+            'peru',
+            'pink',
+            'plum',
+            'powderblue',
+            'purple',
+            'red',
+            'rosybrown',
+            'royalblue',
+            'saddlebrown',
+            'salmon',
+            'sandybrown',
+            'seagreen',
+            'seashell',
+            'sienna',
+            'silver',
+            'skyblue',
+            'slateblue',
+            'slategray',
+            'slategrey',
+            'snow',
+            'springgreen',
+            'steelblue',
+            'tan',
+            'teal',
+            'thistle',
+            'tomato',
+            'turquoise',
+            'violet',
+            'wheat',
+            'white',
+            'whitesmoke',
+            'yellow',
+            'yellowgreen',
+        ]
+        | None = None,
+        hs_color: Any | None = None,
+        xy_color: Any | None = None,
+        color_temp: int | None = None,
+        brightness: int | None = None,
+        white=None,
+        profile: str | None = None,
+        flash: Literal['', 'long', 'short'] | None = None,
+    ):
         """
 
         Args:
@@ -1634,6 +2091,7 @@ class _light_state(StateVal):
             xy_color:  Example: [0.52, 0.43]
             profile:  Example: relax"""
         ...
+
 
 class light:
     office_mike_light: _light_state
@@ -1653,7 +2111,178 @@ class light:
     bedroom_1_christmas_tree_outlet: _light_state
 
     @staticmethod
-    def turn_on(*, entity_id: str, transition: int | None=None, rgb_color: tuple[int, int, int] | None=None, color_temp_kelvin: int | None=None, brightness_pct: int | None=None, brightness_step_pct: int | None=None, effect: str | None=None, rgbw_color: Any | None=None, rgbww_color: Any | None=None, color_name: Literal['', 'homeassistant', 'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'fuchsia', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'lime', 'limegreen', 'linen', 'magenta', 'maroon', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'navy', 'navyblue', 'oldlace', 'olive', 'olivedrab', 'orange', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'purple', 'red', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'silver', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'white', 'whitesmoke', 'yellow', 'yellowgreen'] | None=None, hs_color: Any | None=None, xy_color: Any | None=None, color_temp: int | None=None, brightness: int | None=None, brightness_step: int | None=None, white=None, profile: str | None=None, flash: Literal['', 'long', 'short'] | None=None):
+    def turn_on(
+        *,
+        entity_id: str,
+        transition: int | None = None,
+        rgb_color: tuple[int, int, int] | None = None,
+        color_temp_kelvin: int | None = None,
+        brightness_pct: int | None = None,
+        brightness_step_pct: int | None = None,
+        effect: str | None = None,
+        rgbw_color: Any | None = None,
+        rgbww_color: Any | None = None,
+        color_name: Literal[
+            '',
+            'homeassistant',
+            'aliceblue',
+            'antiquewhite',
+            'aqua',
+            'aquamarine',
+            'azure',
+            'beige',
+            'bisque',
+            'blanchedalmond',
+            'blue',
+            'blueviolet',
+            'brown',
+            'burlywood',
+            'cadetblue',
+            'chartreuse',
+            'chocolate',
+            'coral',
+            'cornflowerblue',
+            'cornsilk',
+            'crimson',
+            'cyan',
+            'darkblue',
+            'darkcyan',
+            'darkgoldenrod',
+            'darkgray',
+            'darkgreen',
+            'darkgrey',
+            'darkkhaki',
+            'darkmagenta',
+            'darkolivegreen',
+            'darkorange',
+            'darkorchid',
+            'darkred',
+            'darksalmon',
+            'darkseagreen',
+            'darkslateblue',
+            'darkslategray',
+            'darkslategrey',
+            'darkturquoise',
+            'darkviolet',
+            'deeppink',
+            'deepskyblue',
+            'dimgray',
+            'dimgrey',
+            'dodgerblue',
+            'firebrick',
+            'floralwhite',
+            'forestgreen',
+            'fuchsia',
+            'gainsboro',
+            'ghostwhite',
+            'gold',
+            'goldenrod',
+            'gray',
+            'green',
+            'greenyellow',
+            'grey',
+            'honeydew',
+            'hotpink',
+            'indianred',
+            'indigo',
+            'ivory',
+            'khaki',
+            'lavender',
+            'lavenderblush',
+            'lawngreen',
+            'lemonchiffon',
+            'lightblue',
+            'lightcoral',
+            'lightcyan',
+            'lightgoldenrodyellow',
+            'lightgray',
+            'lightgreen',
+            'lightgrey',
+            'lightpink',
+            'lightsalmon',
+            'lightseagreen',
+            'lightskyblue',
+            'lightslategray',
+            'lightslategrey',
+            'lightsteelblue',
+            'lightyellow',
+            'lime',
+            'limegreen',
+            'linen',
+            'magenta',
+            'maroon',
+            'mediumaquamarine',
+            'mediumblue',
+            'mediumorchid',
+            'mediumpurple',
+            'mediumseagreen',
+            'mediumslateblue',
+            'mediumspringgreen',
+            'mediumturquoise',
+            'mediumvioletred',
+            'midnightblue',
+            'mintcream',
+            'mistyrose',
+            'moccasin',
+            'navajowhite',
+            'navy',
+            'navyblue',
+            'oldlace',
+            'olive',
+            'olivedrab',
+            'orange',
+            'orangered',
+            'orchid',
+            'palegoldenrod',
+            'palegreen',
+            'paleturquoise',
+            'palevioletred',
+            'papayawhip',
+            'peachpuff',
+            'peru',
+            'pink',
+            'plum',
+            'powderblue',
+            'purple',
+            'red',
+            'rosybrown',
+            'royalblue',
+            'saddlebrown',
+            'salmon',
+            'sandybrown',
+            'seagreen',
+            'seashell',
+            'sienna',
+            'silver',
+            'skyblue',
+            'slateblue',
+            'slategray',
+            'slategrey',
+            'snow',
+            'springgreen',
+            'steelblue',
+            'tan',
+            'teal',
+            'thistle',
+            'tomato',
+            'turquoise',
+            'violet',
+            'wheat',
+            'white',
+            'whitesmoke',
+            'yellow',
+            'yellowgreen',
+        ]
+        | None = None,
+        hs_color: Any | None = None,
+        xy_color: Any | None = None,
+        color_temp: int | None = None,
+        brightness: int | None = None,
+        brightness_step: int | None = None,
+        white=None,
+        profile: str | None = None,
+        flash: Literal['', 'long', 'short'] | None = None,
+    ):
         """
 
         Args:
@@ -1667,7 +2296,12 @@ class light:
         ...
 
     @staticmethod
-    def turn_off(*, entity_id: str, transition: int | None=None, flash: Literal['', 'long', 'short'] | None=None):
+    def turn_off(
+        *,
+        entity_id: str,
+        transition: int | None = None,
+        flash: Literal['', 'long', 'short'] | None = None,
+    ):
         """
 
         Args:
@@ -1675,7 +2309,176 @@ class light:
         ...
 
     @staticmethod
-    def toggle(*, entity_id: str, transition: int | None=None, rgb_color: tuple[int, int, int] | None=None, color_temp_kelvin: int | None=None, brightness_pct: int | None=None, effect: str | None=None, rgbw_color: Any | None=None, rgbww_color: Any | None=None, color_name: Literal['', 'homeassistant', 'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray', 'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray', 'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'fuchsia', 'gainsboro', 'ghostwhite', 'gold', 'goldenrod', 'gray', 'green', 'greenyellow', 'grey', 'honeydew', 'hotpink', 'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray', 'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'lime', 'limegreen', 'linen', 'magenta', 'maroon', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite', 'navy', 'navyblue', 'oldlace', 'olive', 'olivedrab', 'orange', 'orangered', 'orchid', 'palegoldenrod', 'palegreen', 'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum', 'powderblue', 'purple', 'red', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen', 'seashell', 'sienna', 'silver', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan', 'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'white', 'whitesmoke', 'yellow', 'yellowgreen'] | None=None, hs_color: Any | None=None, xy_color: Any | None=None, color_temp: int | None=None, brightness: int | None=None, white=None, profile: str | None=None, flash: Literal['', 'long', 'short'] | None=None):
+    def toggle(
+        *,
+        entity_id: str,
+        transition: int | None = None,
+        rgb_color: tuple[int, int, int] | None = None,
+        color_temp_kelvin: int | None = None,
+        brightness_pct: int | None = None,
+        effect: str | None = None,
+        rgbw_color: Any | None = None,
+        rgbww_color: Any | None = None,
+        color_name: Literal[
+            '',
+            'homeassistant',
+            'aliceblue',
+            'antiquewhite',
+            'aqua',
+            'aquamarine',
+            'azure',
+            'beige',
+            'bisque',
+            'blanchedalmond',
+            'blue',
+            'blueviolet',
+            'brown',
+            'burlywood',
+            'cadetblue',
+            'chartreuse',
+            'chocolate',
+            'coral',
+            'cornflowerblue',
+            'cornsilk',
+            'crimson',
+            'cyan',
+            'darkblue',
+            'darkcyan',
+            'darkgoldenrod',
+            'darkgray',
+            'darkgreen',
+            'darkgrey',
+            'darkkhaki',
+            'darkmagenta',
+            'darkolivegreen',
+            'darkorange',
+            'darkorchid',
+            'darkred',
+            'darksalmon',
+            'darkseagreen',
+            'darkslateblue',
+            'darkslategray',
+            'darkslategrey',
+            'darkturquoise',
+            'darkviolet',
+            'deeppink',
+            'deepskyblue',
+            'dimgray',
+            'dimgrey',
+            'dodgerblue',
+            'firebrick',
+            'floralwhite',
+            'forestgreen',
+            'fuchsia',
+            'gainsboro',
+            'ghostwhite',
+            'gold',
+            'goldenrod',
+            'gray',
+            'green',
+            'greenyellow',
+            'grey',
+            'honeydew',
+            'hotpink',
+            'indianred',
+            'indigo',
+            'ivory',
+            'khaki',
+            'lavender',
+            'lavenderblush',
+            'lawngreen',
+            'lemonchiffon',
+            'lightblue',
+            'lightcoral',
+            'lightcyan',
+            'lightgoldenrodyellow',
+            'lightgray',
+            'lightgreen',
+            'lightgrey',
+            'lightpink',
+            'lightsalmon',
+            'lightseagreen',
+            'lightskyblue',
+            'lightslategray',
+            'lightslategrey',
+            'lightsteelblue',
+            'lightyellow',
+            'lime',
+            'limegreen',
+            'linen',
+            'magenta',
+            'maroon',
+            'mediumaquamarine',
+            'mediumblue',
+            'mediumorchid',
+            'mediumpurple',
+            'mediumseagreen',
+            'mediumslateblue',
+            'mediumspringgreen',
+            'mediumturquoise',
+            'mediumvioletred',
+            'midnightblue',
+            'mintcream',
+            'mistyrose',
+            'moccasin',
+            'navajowhite',
+            'navy',
+            'navyblue',
+            'oldlace',
+            'olive',
+            'olivedrab',
+            'orange',
+            'orangered',
+            'orchid',
+            'palegoldenrod',
+            'palegreen',
+            'paleturquoise',
+            'palevioletred',
+            'papayawhip',
+            'peachpuff',
+            'peru',
+            'pink',
+            'plum',
+            'powderblue',
+            'purple',
+            'red',
+            'rosybrown',
+            'royalblue',
+            'saddlebrown',
+            'salmon',
+            'sandybrown',
+            'seagreen',
+            'seashell',
+            'sienna',
+            'silver',
+            'skyblue',
+            'slateblue',
+            'slategray',
+            'slategrey',
+            'snow',
+            'springgreen',
+            'steelblue',
+            'tan',
+            'teal',
+            'thistle',
+            'tomato',
+            'turquoise',
+            'violet',
+            'wheat',
+            'white',
+            'whitesmoke',
+            'yellow',
+            'yellowgreen',
+        ]
+        | None = None,
+        hs_color: Any | None = None,
+        xy_color: Any | None = None,
+        color_temp: int | None = None,
+        brightness: int | None = None,
+        white=None,
+        profile: str | None = None,
+        flash: Literal['', 'long', 'short'] | None = None,
+    ):
         """
 
         Args:
@@ -1688,10 +2491,10 @@ class light:
             profile:  Example: relax"""
         ...
 
-class logbook:
 
+class logbook:
     @staticmethod
-    def log(*, name: str, message: str, entity_id: str | None=None, domain: str | None=None):
+    def log(*, name: str, message: str, entity_id: str | None = None, domain: str | None = None):
         """
 
         Args:
@@ -1700,64 +2503,51 @@ class logbook:
             domain:  Example: light"""
         ...
 
+
 class logger:
+    @staticmethod
+    def set_default_level(
+        *,
+        level: Literal['', 'debug', 'info', 'warning', 'error', 'fatal', 'critical'] | None = None,
+    ): ...
 
     @staticmethod
-    def set_default_level(*, level: Literal['', 'debug', 'info', 'warning', 'error', 'fatal', 'critical'] | None=None):
-        ...
+    def set_level(): ...
 
-    @staticmethod
-    def set_level():
-        ...
 
 class _media_player_state(StateVal):
     assumed_state: bool
     supported_features: int
 
-    def turn_on(self):
-        ...
+    def turn_on(self): ...
 
-    def turn_off(self):
-        ...
+    def turn_off(self): ...
 
-    def toggle(self):
-        ...
+    def toggle(self): ...
 
-    def volume_up(self):
-        ...
+    def volume_up(self): ...
 
-    def volume_down(self):
-        ...
+    def volume_down(self): ...
 
-    def media_play_pause(self):
-        ...
+    def media_play_pause(self): ...
 
-    def media_play(self):
-        ...
+    def media_play(self): ...
 
-    def media_pause(self):
-        ...
+    def media_pause(self): ...
 
-    def media_stop(self):
-        ...
+    def media_stop(self): ...
 
-    def media_next_track(self):
-        ...
+    def media_next_track(self): ...
 
-    def media_previous_track(self):
-        ...
+    def media_previous_track(self): ...
 
-    def clear_playlist(self):
-        ...
+    def clear_playlist(self): ...
 
-    def volume_set(self, volume_level: int):
-        ...
+    def volume_set(self, volume_level: int): ...
 
-    def volume_mute(self, is_volume_muted: bool):
-        ...
+    def volume_mute(self, is_volume_muted: bool): ...
 
-    def media_seek(self, seek_position: float):
-        ...
+    def media_seek(self, seek_position: float): ...
 
     def join(self, group_members: str):
         """
@@ -1765,7 +2555,7 @@ class _media_player_state(StateVal):
         Args:
             group_members:  Example: - media_player.multiroom_player2
                 - media_player.multiroom_player3
-                """
+        """
         ...
 
     def select_source(self, source: str):
@@ -1782,7 +2572,13 @@ class _media_player_state(StateVal):
             sound_mode:  Example: Music"""
         ...
 
-    def play_media(self, *, media, enqueue: Literal['', 'play', 'next', 'add', 'replace'] | None=None, announce: bool | None=None):
+    def play_media(
+        self,
+        *,
+        media,
+        enqueue: Literal['', 'play', 'next', 'add', 'replace'] | None = None,
+        announce: bool | None = None,
+    ):
         """
 
         Args:
@@ -1790,7 +2586,9 @@ class _media_player_state(StateVal):
             announce:  Example: true"""
         ...
 
-    def browse_media(self, *, media_content_type: str | None=None, media_content_id: str | None=None) -> dict[str, Any]:
+    def browse_media(
+        self, *, media_content_type: str | None = None, media_content_id: str | None = None
+    ) -> dict[str, Any]:
         """
 
         Args:
@@ -1798,7 +2596,14 @@ class _media_player_state(StateVal):
             media_content_id:  Example: A:ALBUMARTIST/Beatles"""
         ...
 
-    def search_media(self, *, search_query: str, media_content_type: str | None=None, media_content_id: str | None=None, media_filter_classes: str | None=None) -> dict[str, Any]:
+    def search_media(
+        self,
+        *,
+        search_query: str,
+        media_content_type: str | None = None,
+        media_content_id: str | None = None,
+        media_filter_classes: str | None = None,
+    ) -> dict[str, Any]:
         """
 
         Args:
@@ -1808,14 +2613,12 @@ class _media_player_state(StateVal):
             media_filter_classes:  Example: ['album', 'artist']"""
         ...
 
-    def shuffle_set(self, shuffle: bool):
-        ...
+    def shuffle_set(self, shuffle: bool): ...
 
-    def unjoin(self):
-        ...
+    def unjoin(self): ...
 
-    def repeat_set(self, repeat: Literal['', 'off', 'all', 'one']):
-        ...
+    def repeat_set(self, repeat: Literal['', 'off', 'all', 'one']): ...
+
 
 class media_player:
     stomp: _media_player_state
@@ -1949,7 +2752,7 @@ class media_player:
             entity_id: Entity ID
             group_members:  Example: - media_player.multiroom_player2
                 - media_player.multiroom_player3
-                """
+        """
         ...
 
     @staticmethod
@@ -1962,7 +2765,7 @@ class media_player:
         ...
 
     @staticmethod
-    def select_sound_mode(*, entity_id: str, sound_mode: str | None=None):
+    def select_sound_mode(*, entity_id: str, sound_mode: str | None = None):
         """
 
         Args:
@@ -1971,7 +2774,13 @@ class media_player:
         ...
 
     @staticmethod
-    def play_media(*, entity_id: str, media, enqueue: Literal['', 'play', 'next', 'add', 'replace'] | None=None, announce: bool | None=None):
+    def play_media(
+        *,
+        entity_id: str,
+        media,
+        enqueue: Literal['', 'play', 'next', 'add', 'replace'] | None = None,
+        announce: bool | None = None,
+    ):
         """
 
         Args:
@@ -1981,7 +2790,12 @@ class media_player:
         ...
 
     @staticmethod
-    def browse_media(*, entity_id: str, media_content_type: str | None=None, media_content_id: str | None=None) -> dict[str, Any]:
+    def browse_media(
+        *,
+        entity_id: str,
+        media_content_type: str | None = None,
+        media_content_id: str | None = None,
+    ) -> dict[str, Any]:
         """
 
         Args:
@@ -1991,7 +2805,14 @@ class media_player:
         ...
 
     @staticmethod
-    def search_media(*, entity_id: str, search_query: str, media_content_type: str | None=None, media_content_id: str | None=None, media_filter_classes: str | None=None) -> dict[str, Any]:
+    def search_media(
+        *,
+        entity_id: str,
+        search_query: str,
+        media_content_type: str | None = None,
+        media_content_id: str | None = None,
+        media_filter_classes: str | None = None,
+    ) -> dict[str, Any]:
         """
 
         Args:
@@ -2026,10 +2847,17 @@ class media_player:
             entity_id: Entity ID"""
         ...
 
-class mqtt:
 
+class mqtt:
     @staticmethod
-    def publish(*, topic: str, payload=None, evaluate_payload: bool=False, qos: Literal['', '0', '1', '2']=0, retain: bool=False):
+    def publish(
+        *,
+        topic: str,
+        payload=None,
+        evaluate_payload: bool = False,
+        qos: Literal['', '0', '1', '2'] = '0',
+        retain: bool = False,
+    ):
         """
 
         Args:
@@ -2038,7 +2866,7 @@ class mqtt:
         ...
 
     @staticmethod
-    def dump(*, topic: str | None=None, duration: int=5):
+    def dump(*, topic: str | None = None, duration: int = 5):
         """
 
         Args:
@@ -2046,21 +2874,21 @@ class mqtt:
         ...
 
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
+
 
 class _notify_state(StateVal):
     supported_features: int
 
-    def send_message(self, *, message: str, title: str | None=None):
-        ...
+    def send_message(self, *, message: str, title: str | None = None): ...
+
 
 class notify:
     galaxy_tab_a7_overlay_nachricht: _notify_state
     galaxy_tab_a7_text_zu_sprache: _notify_state
 
     @staticmethod
-    def send_message(*, entity_id: str, message: str, title: str | None=None):
+    def send_message(*, entity_id: str, message: str, title: str | None = None):
         """
 
         Args:
@@ -2068,7 +2896,7 @@ class notify:
         ...
 
     @staticmethod
-    def persistent_notification(*, message: str, title: str | None=None, data: Any | None=None):
+    def persistent_notification(*, message: str, title: str | None = None, data: Any | None = None):
         """
 
         Args:
@@ -2078,7 +2906,13 @@ class notify:
         ...
 
     @staticmethod
-    def mobile_app_all(*, message: str, title: str | None=None, target: Any | None=None, data: Any | None=None):
+    def mobile_app_all(
+        *,
+        message: str,
+        title: str | None = None,
+        target: Any | None = None,
+        data: Any | None = None,
+    ):
         """Sends a notification message using the mobile_app_all service.
 
         Args:
@@ -2089,7 +2923,13 @@ class notify:
         ...
 
     @staticmethod
-    def mobile_app_iphone_von_ben(*, message: str, title: str | None=None, target: Any | None=None, data: Any | None=None):
+    def mobile_app_iphone_von_ben(
+        *,
+        message: str,
+        title: str | None = None,
+        target: Any | None = None,
+        data: Any | None = None,
+    ):
         """Sends a notification message using the mobile_app_iphone_von_ben integration.
 
         Args:
@@ -2100,7 +2940,13 @@ class notify:
         ...
 
     @staticmethod
-    def mobile_app_ben_pagel(*, message: str, title: str | None=None, target: Any | None=None, data: Any | None=None):
+    def mobile_app_ben_pagel(
+        *,
+        message: str,
+        title: str | None = None,
+        target: Any | None = None,
+        data: Any | None = None,
+    ):
         """Sends a notification message using the mobile_app_ben_pagel integration.
 
         Args:
@@ -2111,7 +2957,13 @@ class notify:
         ...
 
     @staticmethod
-    def mobile_app_public_tablet(*, message: str, title: str | None=None, target: Any | None=None, data: Any | None=None):
+    def mobile_app_public_tablet(
+        *,
+        message: str,
+        title: str | None = None,
+        target: Any | None = None,
+        data: Any | None = None,
+    ):
         """Sends a notification message using the mobile_app_public_tablet integration.
 
         Args:
@@ -2122,7 +2974,13 @@ class notify:
         ...
 
     @staticmethod
-    def mobile_app_sm_g780g(*, message: str, title: str | None=None, target: Any | None=None, data: Any | None=None):
+    def mobile_app_sm_g780g(
+        *,
+        message: str,
+        title: str | None = None,
+        target: Any | None = None,
+        data: Any | None = None,
+    ):
         """Sends a notification message using the mobile_app_sm_g780g integration.
 
         Args:
@@ -2133,7 +2991,13 @@ class notify:
         ...
 
     @staticmethod
-    def mobile_app_s22_mike(*, message: str, title: str | None=None, target: Any | None=None, data: Any | None=None):
+    def mobile_app_s22_mike(
+        *,
+        message: str,
+        title: str | None = None,
+        target: Any | None = None,
+        data: Any | None = None,
+    ):
         """Sends a notification message using the mobile_app_s22_mike integration.
 
         Args:
@@ -2144,7 +3008,13 @@ class notify:
         ...
 
     @staticmethod
-    def notify(*, message: str, title: str | None=None, target: Any | None=None, data: Any | None=None):
+    def notify(
+        *,
+        message: str,
+        title: str | None = None,
+        target: Any | None = None,
+        data: Any | None = None,
+    ):
         """Sends a notification message using the notify service.
 
         Args:
@@ -2153,6 +3023,7 @@ class notify:
             target:  Example: platform specific
             data:  Example: platform specific"""
         ...
+
 
 class _number_state(StateVal):
     max: float | int
@@ -2189,6 +3060,7 @@ class _number_state(StateVal):
         Args:
             amount: The amount to decrease the number with. If not provided, the step of the number entity will be used."""
         ...
+
 
 class number:
     galaxy_tab_a7_bildschirmschoner_timer: _number_state
@@ -2230,7 +3102,7 @@ class number:
         ...
 
     @staticmethod
-    def increment(*, entity_id: str, amount: float | None=None):
+    def increment(*, entity_id: str, amount: float | None = None):
         """Increase a number entity value by a certain amount.
 
         Args:
@@ -2239,7 +3111,7 @@ class number:
         ...
 
     @staticmethod
-    def decrement(*, entity_id: str, amount: float | None=None):
+    def decrement(*, entity_id: str, amount: float | None = None):
         """Decrease a number entity value by a certain amount.
 
         Args:
@@ -2247,10 +3119,10 @@ class number:
             amount: The amount to decrease the number with. If not provided, the step of the number entity will be used."""
         ...
 
-class persistent_notification:
 
+class persistent_notification:
     @staticmethod
-    def create(*, message: str, title: str | None=None, notification_id: str | None=None):
+    def create(*, message: str, title: str | None = None, notification_id: str | None = None):
         """
 
         Args:
@@ -2268,8 +3140,8 @@ class persistent_notification:
         ...
 
     @staticmethod
-    def dismiss_all():
-        ...
+    def dismiss_all(): ...
+
 
 class _person_state(StateVal):
     device_trackers: list
@@ -2282,14 +3154,14 @@ class _person_state(StateVal):
     source: str
     user_id: str
 
+
 class person:
     mike_pagel: _person_state
     britta_pagel: _person_state
     ben_pagel: _person_state
 
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
 
     @staticmethod
     def remove_device_tracker(*, entity_id: str, device_tracker: str):
@@ -2309,16 +3181,24 @@ class person:
             device_tracker: The device tracker entity ID to add to the person."""
         ...
 
-class presence_simulation:
 
+class presence_simulation:
     @staticmethod
-    def start(*, switch_id=None, entity_id=None, delta=None, restore_states=None, random=None, brightness=None):
+    def start(
+        *,
+        switch_id=None,
+        entity_id=None,
+        delta=None,
+        restore_states=None,
+        random=None,
+        brightness=None,
+    ):
         """Start the presence simulation
 
         Args:
             switch_id: The id of the presence simulation switch Example: switch.presence_simulation_2
             entity_id: The list of entities to use by the presence simulation to override the list configured in the component Example: - group.outside_lights
-                
+
             delta: Override the default number of days used by the simulation Example: 7
             restore_states: Override the default restore switch. If set, the states will be restored after the simulation Example: True
             random: Add a random factor (in seconds) to the historic events Example: 300
@@ -2341,8 +3221,8 @@ class presence_simulation:
             switch_id: The id of the presence simulation switch Example: switch.presence_simulation_2"""
         ...
 
-class pyscript:
 
+class pyscript:
     @staticmethod
     def hello_world(*, action=None, id=None):
         """hello_world example using pyscript.
@@ -2353,7 +3233,7 @@ class pyscript:
         ...
 
     @staticmethod
-    def reload(*, global_ctx: str | None=None):
+    def reload(*, global_ctx: str | None = None):
         """Reloads all available pyscripts and restart triggers
 
         Args:
@@ -2366,7 +3246,19 @@ class pyscript:
         ...
 
     @staticmethod
-    def jupyter_kernel_start(*, key: str, kernel_name: str='pyscript', shell_port: int | None=None, iopub_port: int | None=None, stdin_port: int | None=None, control_port: int | None=None, hb_port: int | None=None, ip: str='127.0.0.1', transport: Literal['', 'tcp', 'udp']='tcp', signature_scheme: Literal['', 'hmac-sha256']='hmac-sha256'):
+    def jupyter_kernel_start(
+        *,
+        key: str,
+        kernel_name: str = 'pyscript',
+        shell_port: int | None = None,
+        iopub_port: int | None = None,
+        stdin_port: int | None = None,
+        control_port: int | None = None,
+        hb_port: int | None = None,
+        ip: str = '127.0.0.1',
+        transport: Literal['', 'tcp', 'udp'] = 'tcp',
+        signature_scheme: Literal['', 'hmac-sha256'] = 'hmac-sha256',
+    ):
         """Starts a jupyter kernel for interactive use; Called by Jupyter front end and should generally not be used by users
 
         Args:
@@ -2382,14 +3274,21 @@ class pyscript:
             signature_scheme: Signing algorithm Example: hmac-sha256"""
         ...
 
+
 class recorder:
+    @staticmethod
+    def purge(
+        *, keep_days: int | None = None, repack: bool = False, apply_filter: bool = False
+    ): ...
 
     @staticmethod
-    def purge(*, keep_days: int | None=None, repack: bool=False, apply_filter: bool=False):
-        ...
-
-    @staticmethod
-    def purge_entities(*, entity_id: str | None=None, domains: Any | None=None, entity_globs: Any | None=None, keep_days: int=0):
+    def purge_entities(
+        *,
+        entity_id: str | None = None,
+        domains: Any | None = None,
+        entity_globs: Any | None = None,
+        keep_days: int = 0,
+    ):
         """
 
         Args:
@@ -2398,15 +3297,21 @@ class recorder:
         ...
 
     @staticmethod
-    def enable():
-        ...
+    def enable(): ...
 
     @staticmethod
-    def disable():
-        ...
+    def disable(): ...
 
     @staticmethod
-    def get_statistics(*, start_time: datetime, statistic_ids, period: Literal['', '5minute', 'hour', 'day', 'week', 'month'], types: Literal['', 'change', 'last_reset', 'max', 'mean', 'min', 'state', 'sum'], end_time: datetime | None=None, units: Any | None=None) -> dict[str, Any]:
+    def get_statistics(
+        *,
+        start_time: datetime,
+        statistic_ids,
+        period: Literal['', '5minute', 'hour', 'day', 'week', 'month'],
+        types: Literal['', 'change', 'last_reset', 'max', 'mean', 'min', 'state', 'sum'],
+        end_time: datetime | None = None,
+        units: Any | None = None,
+    ) -> dict[str, Any]:
         """
 
         Args:
@@ -2419,7 +3324,16 @@ class recorder:
         ...
 
     @staticmethod
-    def import_statistics(*, statistic_id: str, source: str, has_mean: bool, has_sum: bool, stats: Any, name: str | None=None, unit_of_measurement: str | None=None):
+    def import_statistics(
+        *,
+        statistic_id: str,
+        source: str,
+        has_mean: bool,
+        has_sum: bool,
+        stats: Any,
+        name: str | None = None,
+        unit_of_measurement: str | None = None,
+    ):
         """Import long-term statistics.
 
         Args:
@@ -2432,8 +3346,8 @@ class recorder:
             unit_of_measurement: The unit of measurement of the statistics."""
         ...
 
-class repairs:
 
+class repairs:
     @staticmethod
     def remove(*, issue_id: str):
         """Removes a manually created Home Assistant repairs issue. This action can only remove issues created with the `repairs_create` action.
@@ -2443,7 +3357,15 @@ class repairs:
         ...
 
     @staticmethod
-    def create(*, title: str, description: str, issue_id: str | None=None, domain: str | None=None, severity: Literal['', 'warning', 'error', 'critical'] | None=None, persistent: bool | None=None):
+    def create(
+        *,
+        title: str,
+        description: str,
+        issue_id: str | None = None,
+        domain: str | None = None,
+        severity: Literal['', 'warning', 'error', 'critical'] | None = None,
+        persistent: bool | None = None,
+    ):
         """Manually create and raise a issue in Home Assistant repairs.
 
         Args:
@@ -2465,24 +3387,21 @@ class repairs:
         """Ignore all issues currently raised in Home Assistant Repairs."""
         ...
 
+
 class rest_command:
+    @staticmethod
+    def update_cloudflare_mpagel_de_aaaa() -> dict[str, Any]: ...
 
     @staticmethod
-    def update_cloudflare_mpagel_de_aaaa() -> dict[str, Any]:
-        ...
+    def reload(): ...
 
-    @staticmethod
-    def reload():
-        ...
 
 class scene:
+    @staticmethod
+    def reload(): ...
 
     @staticmethod
-    def reload():
-        ...
-
-    @staticmethod
-    def apply(*, entities: Any, transition: int | None=None):
+    def apply(*, entities: Any, transition: int | None = None):
         """
 
         Args:
@@ -2490,11 +3409,11 @@ class scene:
                 light.ceiling:
                   state: "on"
                   brightness: 80
-                """
+        """
         ...
 
     @staticmethod
-    def create(*, scene_id: str, entities: Any | None=None, snapshot_entities: str | None=None):
+    def create(*, scene_id: str, entities: Any | None = None, snapshot_entities: str | None = None):
         """
 
         Args:
@@ -2503,10 +3422,10 @@ class scene:
                 light.ceiling:
                   state: "on"
                   brightness: 200
-                
+
             snapshot_entities:  Example: - light.ceiling
                 - light.kitchen
-                """
+        """
         ...
 
     @staticmethod
@@ -2518,18 +3437,17 @@ class scene:
         ...
 
     @staticmethod
-    def turn_on(*, entity_id: str, transition: int | None=None):
+    def turn_on(*, entity_id: str, transition: int | None = None):
         """
 
         Args:
             entity_id: Entity ID"""
         ...
 
-class schedule:
 
+class schedule:
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
 
     @staticmethod
     def get_schedule(*, entity_id: str) -> dict[str, Any]:
@@ -2539,6 +3457,7 @@ class schedule:
             entity_id: Entity ID"""
         ...
 
+
 class _script_state(StateVal):
     current: int
     last_triggered: datetime
@@ -2546,26 +3465,22 @@ class _script_state(StateVal):
     restored: bool
     supported_features: int
 
-    def turn_on(self):
-        ...
+    def turn_on(self): ...
 
-    def turn_off(self):
-        ...
+    def turn_off(self): ...
 
-    def toggle(self):
-        ...
+    def toggle(self): ...
+
 
 class script:
     fire_ad_event: _script_state
     fire_ad_trigger: _script_state
 
     @staticmethod
-    def fire_ad_trigger() -> dict[str, Any]:
-        ...
+    def fire_ad_trigger() -> dict[str, Any]: ...
 
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
 
     @staticmethod
     def turn_on(*, entity_id: str):
@@ -2591,17 +3506,15 @@ class script:
             entity_id: Entity ID"""
         ...
 
+
 class _select_state(StateVal):
     options: list
 
-    def select_first(self):
-        ...
+    def select_first(self): ...
 
-    def select_last(self):
-        ...
+    def select_last(self): ...
 
-    def select_next(self, cycle: bool):
-        ...
+    def select_next(self, cycle: bool): ...
 
     def select_option(self, option: str):
         '''
@@ -2610,8 +3523,7 @@ class _select_state(StateVal):
             option:  Example: "Item A"'''
         ...
 
-    def select_previous(self, cycle: bool):
-        ...
+    def select_previous(self, cycle: bool): ...
 
     def random(self, options: Any | None):
         """Select an random option for a select entity.
@@ -2619,6 +3531,7 @@ class _select_state(StateVal):
         Args:
             options: Limits the options to select from. If not provided, all options will be considered."""
         ...
+
 
 class select:
     zigbee2mqtt_bridge_log_level: _select_state
@@ -2667,7 +3580,7 @@ class select:
         ...
 
     @staticmethod
-    def select_next(*, entity_id: str, cycle: bool=True):
+    def select_next(*, entity_id: str, cycle: bool = True):
         """
 
         Args:
@@ -2684,7 +3597,7 @@ class select:
         ...
 
     @staticmethod
-    def select_previous(*, entity_id: str, cycle: bool=True):
+    def select_previous(*, entity_id: str, cycle: bool = True):
         """
 
         Args:
@@ -2692,13 +3605,14 @@ class select:
         ...
 
     @staticmethod
-    def random(*, entity_id: str, options: Any | None=None):
+    def random(*, entity_id: str, options: Any | None = None):
         """Select an random option for a select entity.
 
         Args:
             entity_id: Entity ID
             options: Limits the options to select from. If not provided, all options will be considered."""
         ...
+
 
 class _sensor_state(StateVal):
     Available: str
@@ -2742,6 +3656,7 @@ class _sensor_state(StateVal):
     unit_of_measurement: str
     uri_supported: str
     url: str
+
 
 class sensor:
     printer_printlex: _sensor_state
@@ -2965,8 +3880,8 @@ class sensor:
     bedroom_1_christmas_tree_outlet_linkquality: _sensor_state
     bedroom_1_christmas_tree_outlet_last_seen: _sensor_state
 
-class spook:
 
+class spook:
     @staticmethod
     def random_fail():
         """Performing this action will randomly fail."""
@@ -2977,24 +3892,24 @@ class spook:
         """Calling this action spooks Home Assistant. Performing this action will always fail."""
         ...
 
-class _stt_state(StateVal):
-    ...
+
+class _stt_state(StateVal): ...
+
 
 class stt:
     home_assistant_cloud: _stt_state
+
 
 class _switch_state(StateVal):
     restored: bool
     supported_features: int
 
-    def turn_off(self):
-        ...
+    def turn_off(self): ...
 
-    def turn_on(self):
-        ...
+    def turn_on(self): ...
 
-    def toggle(self):
-        ...
+    def toggle(self): ...
+
 
 class switch:
     laundry_washer: _switch_state
@@ -3060,14 +3975,18 @@ class switch:
             entity_id: Entity ID"""
         ...
 
+
 class system_log:
+    @staticmethod
+    def clear(): ...
 
     @staticmethod
-    def clear():
-        ...
-
-    @staticmethod
-    def write(*, message: str, level: Literal['', 'debug', 'info', 'warning', 'error', 'critical']='error', logger: str | None=None):
+    def write(
+        *,
+        message: str,
+        level: Literal['', 'debug', 'info', 'warning', 'error', 'critical'] = 'error',
+        logger: str | None = None,
+    ):
         """
 
         Args:
@@ -3075,11 +3994,11 @@ class system_log:
             logger:  Example: mycomponent.myplatform"""
         ...
 
-class template:
 
+class template:
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
+
 
 class _text_state(StateVal):
     max: int
@@ -3094,6 +4013,7 @@ class _text_state(StateVal):
             value:  Example: Hello world!"""
         ...
 
+
 class text:
     guestbath_radiator_holiday_start_stop: _text_state
     bedroom_ben_radiator_schedule_settings: _text_state
@@ -3107,8 +4027,8 @@ class text:
             value:  Example: Hello world!"""
         ...
 
-class time:
 
+class time:
     @staticmethod
     def set_value(*, entity_id: str, time: str):
         """
@@ -3118,14 +4038,13 @@ class time:
             time:  Example: 22:15"""
         ...
 
+
 class timer:
+    @staticmethod
+    def reload(): ...
 
     @staticmethod
-    def reload():
-        ...
-
-    @staticmethod
-    def start(*, entity_id: str, duration: str | None=None):
+    def start(*, entity_id: str, duration: str | None = None):
         """
 
         Args:
@@ -3158,7 +4077,7 @@ class timer:
         ...
 
     @staticmethod
-    def change(*, entity_id: str, duration: str=0):
+    def change(*, entity_id: str, duration: str = '0'):
         """
 
         Args:
@@ -3175,9 +4094,17 @@ class timer:
             duration: New duration for the timer, as a timedelta string. Example: 00:01:00, 60"""
         ...
 
-class _tts_state(StateVal):
 
-    def speak(self, *, media_player_entity_id: str, message: str, cache: bool=True, language: str | None=None, options: Any | None=None):
+class _tts_state(StateVal):
+    def speak(
+        self,
+        *,
+        media_player_entity_id: str,
+        message: str,
+        cache: bool = True,
+        language: str | None = None,
+        options: Any | None = None,
+    ):
         """
 
         Args:
@@ -3186,11 +4113,20 @@ class _tts_state(StateVal):
             options:  Example: platform specific"""
         ...
 
+
 class tts:
     home_assistant_cloud: _tts_state
 
     @staticmethod
-    def speak(*, entity_id: str, media_player_entity_id: str, message: str, cache: bool=True, language: str | None=None, options: Any | None=None):
+    def speak(
+        *,
+        entity_id: str,
+        media_player_entity_id: str,
+        message: str,
+        cache: bool = True,
+        language: str | None = None,
+        options: Any | None = None,
+    ):
         """
 
         Args:
@@ -3201,11 +4137,17 @@ class tts:
         ...
 
     @staticmethod
-    def clear_cache():
-        ...
+    def clear_cache(): ...
 
     @staticmethod
-    def cloud_say(*, entity_id: str, message: str, cache: bool=False, language: str | None=None, options: Any | None=None):
+    def cloud_say(
+        *,
+        entity_id: str,
+        message: str,
+        cache: bool = False,
+        language: str | None = None,
+        options: Any | None = None,
+    ):
         """Say something using text-to-speech on a media player with cloud.
 
         Args:
@@ -3213,6 +4155,7 @@ class tts:
             language:  Example: ru
             options:  Example: platform specific"""
         ...
+
 
 class _update_state(StateVal):
     auto_update: bool
@@ -3229,18 +4172,17 @@ class _update_state(StateVal):
     title: str
     update_percentage: Any
 
-    def install(self, *, version: str | None=None, backup: bool | None=None):
+    def install(self, *, version: str | None = None, backup: bool | None = None):
         """
 
         Args:
             version:  Example: 1.0.0"""
         ...
 
-    def skip(self):
-        ...
+    def skip(self): ...
 
-    def clear_skipped(self):
-        ...
+    def clear_skipped(self): ...
+
 
 class update:
     home_assistant_supervisor_update: _update_state
@@ -3284,7 +4226,7 @@ class update:
     bedroom_1_christmas_tree_outlet: _update_state
 
     @staticmethod
-    def install(*, entity_id: str, version: str | None=None, backup: bool | None=None):
+    def install(*, entity_id: str, version: str | None = None, backup: bool | None = None):
         """
 
         Args:
@@ -3308,8 +4250,8 @@ class update:
             entity_id: Entity ID"""
         ...
 
-class valve:
 
+class valve:
     @staticmethod
     def open_valve(*, entity_id: str):
         """
@@ -3350,11 +4292,13 @@ class valve:
             entity_id: Entity ID"""
         ...
 
-class _wake_word_state(StateVal):
-    ...
+
+class _wake_word_state(StateVal): ...
+
 
 class wake_word:
     openwakeword: _wake_word_state
+
 
 class _weather_state(StateVal):
     attribution: str
@@ -3373,19 +4317,24 @@ class _weather_state(StateVal):
     wind_speed: float
     wind_speed_unit: str
 
-    def get_forecasts(self, type: Literal['', 'daily', 'hourly', 'twice_daily']) -> dict[str, Any]:
-        ...
+    def get_forecasts(
+        self, type: Literal['', 'daily', 'hourly', 'twice_daily']
+    ) -> dict[str, Any]: ...
+
 
 class weather:
     forecast_home: _weather_state
 
     @staticmethod
-    def get_forecasts(*, entity_id: str, type: Literal['', 'daily', 'hourly', 'twice_daily']) -> dict[str, Any]:
+    def get_forecasts(
+        *, entity_id: str, type: Literal['', 'daily', 'hourly', 'twice_daily']
+    ) -> dict[str, Any]:
         """
 
         Args:
             entity_id: Entity ID"""
         ...
+
 
 class _zone_state(StateVal):
     editable: bool
@@ -3394,6 +4343,7 @@ class _zone_state(StateVal):
     passive: bool
     persons: list
     radius: float
+
 
 class zone:
     antonia: _zone_state
@@ -3407,11 +4357,17 @@ class zone:
     wohnung_ben: _zone_state
 
     @staticmethod
-    def reload():
-        ...
+    def reload(): ...
 
     @staticmethod
-    def create(*, name: str, latitude: float, longitude: float, icon: str | None=None, radius: float=100):
+    def create(
+        *,
+        name: str,
+        latitude: float,
+        longitude: float,
+        icon: str | None = None,
+        radius: float = 100,
+    ):
         """Create a new zone in Home Assistant on the fly.
 
         Args:
@@ -3431,7 +4387,15 @@ class zone:
         ...
 
     @staticmethod
-    def update(*, entity_id: str, name: str | None=None, icon: str | None=None, latitude: float | None=None, longitude: float | None=None, radius: float=100):
+    def update(
+        *,
+        entity_id: str,
+        name: str | None = None,
+        icon: str | None = None,
+        latitude: float | None = None,
+        longitude: float | None = None,
+        radius: float = 100,
+    ):
         """Update properties of a zone on the fly.
 
         Args:
