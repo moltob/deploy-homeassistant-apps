@@ -17,4 +17,9 @@
       - "--exclude=.mypy_cache"
       - "--exclude=.pytest_cache"
       - "--exclude=.ruff_cache"
+      - "--omit-dir-times"
+      - "--no-perms"
+      - "--no-owner"
+      - "--no-group"
+      - "--no-times"
   notify: Restart AppDaemon

@@ -3,4 +3,7 @@
   gather_facts: false
 
   roles:
-    - appdaemon
+    - role: homeassistant
+      tags: homeassistant
+    - role: appdaemon
+      tags: appdaemon

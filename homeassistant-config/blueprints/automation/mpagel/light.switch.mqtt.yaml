@@ -1,0 +1,54 @@
+blueprint:
+  name: Light Switch (MQTT)
+  description: Toggle light state after an MQTT-based switch is pressed once.
+  domain: automation
+  input:
+    switch:
+      name: MQTT Switch
+      description: Switch device to trigger the light toggle action.
+      selector:
+        device:
+          filter:
+            - manufacturer: Aqara
+              # model: Wireless remote switch H1 (double rocker)
+              model_id: WXKG15LM
+            - manufacturer: Aqara
+              # model: Wireless remote switch E1 (single rocker)
+              model_id: WXKG16LM
+            - manufacturer: Tuya
+              # model: Wireless switch with 1 button
+              model_id: TS0041
+            - manufacturer: Marmitek
+              # model: Smart switch
+              model_id: Push_LO
+    action:
+      name: Switch Action
+      description: Action type sent by the MQTT switch device trigger.
+      default: single
+    light:
+      name: Light
+      description: The light to toggle.
+      selector:
+        entity:
+          domain: light
+
+triggers:
+  - domain: mqtt
+    # device_id: b0de852ccb87ed5b8c848dce8b1d7496
+    device_id: !input switch
+    type: action
+    # subtype: single_left
+    subtype: !input action
+    trigger: device
+
+conditions: []
+
+actions:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      # entity_id: light.attic_lamp_shelf
+      entity_id: !input light
+
+mode: single

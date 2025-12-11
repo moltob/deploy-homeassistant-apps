@@ -1,0 +1,25 @@
+blueprint:
+  name: Light Timer
+  description: Turn off light after a number of seconds.
+  domain: automation
+  input:
+    light:
+      name: Light
+      description: The light to monitor.
+      selector:
+        entity:
+          domain: light
+
+triggers:
+  - trigger: state
+    entity_id: !input light
+
+conditions: []
+
+actions:
+  - action: pyscript.light_timer
+    metadata: {}
+    data:
+      entity_id: !input light
+
+mode: single
