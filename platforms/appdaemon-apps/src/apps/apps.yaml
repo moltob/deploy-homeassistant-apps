@@ -168,13 +168,13 @@ timer_guestbath_light:
     ent_actuator: light.guestbath_light
   minutes: 15
 
-timer_firstfloor_light:
-  module: toggle
-  class: TimerApp
-  dependencies: dispatcher
-  entities:
-    ent_actuator: light.first_floor_light
-  minutes: 3
+# timer_firstfloor_light:
+#   module: toggle
+#   class: TimerApp
+#   dependencies: dispatcher
+#   entities:
+#     ent_actuator: light.first_floor_light
+#   minutes: 3
 
 timer_groundfloor_light:
   module: toggle
