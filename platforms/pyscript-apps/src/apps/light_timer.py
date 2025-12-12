@@ -7,8 +7,8 @@ task_by_entity: dict[str, asyncio.Task] = {}
 
 
 def turn_off_light_after(entity_id: str, duration: int):
-    log.info('Scheduling to turn of %r after %d seconds.', entity_id, duration)
-    task.sleep(duration)
+    log.info('Scheduling to turn of %r after %d minutes.', entity_id, duration)
+    task.sleep(duration * 60)
     log.info('Timer expired, turning off %r.', entity_id)
     light.turn_off(entity_id=entity_id)
     del task_by_entity[entity_id]

@@ -1,6 +1,6 @@
 blueprint:
   name: Light Timer
-  description: Turn off light after a number of seconds.
+  description: Turn off light after a number of minutes.
   domain: automation
   input:
     light:
@@ -11,13 +11,13 @@ blueprint:
           domain: light
     duration:
       name: Duration
-      description: Time in seconds before the light turns off automatically.
-      default: 300
+      description: Time in minutes before the light turns off automatically.
+      default: 5
       selector:
         number:
           min: 1
-          max: 86400
-          unit_of_measurement: seconds
+          max: 1440
+          unit_of_measurement: minutes
           mode: box
 
 triggers:
