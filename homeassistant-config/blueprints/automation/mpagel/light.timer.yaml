@@ -21,5 +21,6 @@ actions:
     metadata: {}
     data:
       entity_id: !input light
+      new_state: "{{ trigger.to_state.state }}"
 
 mode: single
