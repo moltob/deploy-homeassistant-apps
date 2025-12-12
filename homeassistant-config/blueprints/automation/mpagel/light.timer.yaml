@@ -9,6 +9,16 @@ blueprint:
       selector:
         entity:
           domain: light
+    duration:
+      name: Duration
+      description: Time in seconds before the light turns off automatically.
+      default: 300
+      selector:
+        number:
+          min: 1
+          max: 86400
+          unit_of_measurement: seconds
+          mode: box
 
 triggers:
   - trigger: state
@@ -22,5 +32,6 @@ actions:
     data:
       entity_id: !input light
       new_state: "{{ trigger.to_state.state }}"
+      duration: !input duration
 
 mode: single
