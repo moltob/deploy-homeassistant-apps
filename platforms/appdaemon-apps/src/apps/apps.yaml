@@ -17,18 +17,18 @@ z2m_legacy_trigger:
     - mqtt_device: Diningroom Switch Lights
       entity: sensor.diningroom_switch_lights_action_sim
 
-multi_toggle_attic_lights:
-  module: toggle
-  class: MultiLightToggleApp
-  dependencies: [dispatcher, z2m_legacy_trigger]
-  entities:
-    ent_switch: sensor.attic_switch_lights_action_sim
-    ent_lights:
-      - light.attic_balllight
-      - light.attic_lamp_shelf
-  actions:
-    single: "single"
-    double: "double"
+# multi_toggle_attic_lights:
+#   module: toggle
+#   class: MultiLightToggleApp
+#   dependencies: [dispatcher, z2m_legacy_trigger]
+#   entities:
+#     ent_switch: sensor.attic_switch_lights_action_sim
+#     ent_lights:
+#       - light.attic_balllight
+#       - light.attic_lamp_shelf
+#   actions:
+#     single: "single"
+#     double: "double"
 
 radiator_attic:
   module: radiator

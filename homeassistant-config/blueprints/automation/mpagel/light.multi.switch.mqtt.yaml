@@ -48,6 +48,7 @@ actions:
   - action: pyscript.light_multi_switch
     metadata: {}
     data:
+      automation_id: "{{ this.entity_id }}"
       entity_ids: !input lights
       event_id: "{{ trigger.id }}"
 
