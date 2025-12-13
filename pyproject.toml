@@ -2,10 +2,18 @@
 name = "homeassistant-apps"
 version = "0.1.0"
 description = "Homeassistant applications and configurations"
-dependencies = ["appdaemon-apps", "pyscript-apps"]
+dependencies = [
+    "appdaemon-apps",
+    "pyright>=1.1.407",
+    "pyscript-apps",
+]
 
 [dependency-groups]
-dev = ["ruff>=0.9.1", "yamllint>=1.35.1", "ansible>=13.0.0", "pyrefly>=0.45.2"]
+dev = [
+    "ruff>=0.9.1",
+    "yamllint>=1.35.1",
+    "ansible>=13.0.0",
+]
 
 [tool.uv.sources]
 "appdaemon-apps" = { workspace = true }
@@ -53,6 +61,43 @@ quote-style = "single"
 project-excludes = ["**/node_modules", "**/__pycache__"]
 search-path = ["platforms/pyscript-apps/src/apps/modules"]
 infer-with-first-use = false
+
+[tool.pyright]
+# mimic the funky import structure of HA:
+extraPaths = ["platforms/appdaemon-apps/src/apps", "platforms/pyscript-apps/src/apps/modules"]
+
+useLibraryCodeForTypes = true
+include = ["platforms/**/*.py"]
+exclude = ["**/node_modules", "**/__pycache__"]
+deprecateTypingAliases = true
+reportAssertAlwaysTrue = true
+reportCallInDefaultInitializer = true
+reportConstantRedefinition = true
+reportDeprecated = true
+reportDuplicateImport = true
+reportImplicitOverride = true
+reportImplicitStringConcatenation = false       # we do this to split strings due to line length
+reportImportCycles = false                      # we do have cycles for type checking only
+reportIncompleteStub = true
+reportInconsistentConstructor = true
+reportInvalidStringEscapeSequence = true
+reportInvalidStubStatement = true
+reportInvalidTypeVarUse = true
+reportMatchNotExhaustive = true
+# reportMissingSuperCall = true  # broken, false positives
+reportPrivateUsage = true
+reportPropertyTypeMismatch = true
+reportSelfClsParameterName = true
+reportTypeCommentUsage = true
+reportUnnecessaryCast = true
+reportUnnecessaryComparison = true
+reportUnnecessaryContains = true
+reportUnnecessaryIsInstance = true
+reportUnnecessaryTypeIgnoreComment = true
+reportUnsupportedDunderAll = true
+reportUnusedImport = true
+reportUnusedVariable = true
+reportWildcardImportFromLibrary = true
 
 [tool.coverage.run]
 branch = true
