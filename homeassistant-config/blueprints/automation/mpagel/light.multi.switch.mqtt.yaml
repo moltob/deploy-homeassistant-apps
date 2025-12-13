@@ -1,0 +1,54 @@
+blueprint:
+  name: Light Multi Switch (MQTT)
+  description:
+    Toggle multiple lights in the order specified. A single click switches to the next light, a
+    double click switch all lights on or off.
+  domain: automation
+  input:
+    switch:
+      name: MQTT Switch
+      description: Switch device to trigger the light toggle action.
+      selector:
+        device:
+          filter:
+            - manufacturer: Tuya
+              # model: Wireless switch with 1 button
+              model_id: TS0041
+    action_single:
+      name: Single Click Action
+      description: Action type sent by the MQTT switch device for single click.
+      default: single
+    action_double:
+      name: Double Click Action
+      description: Action type sent by the MQTT switch device for double click.
+      default: double
+    lights:
+      name: Lights
+      description: The lights to toggle (two or more).
+      selector:
+        entity:
+          domain: light
+          multiple: true
+
+triggers:
+  - id: single
+    subtype: !input action_single
+    <<: &mqtt_trigger
+      domain: mqtt
+      device_id: !input switch
+      type: action
+      trigger: device
+  - id: double
+    subtype: !input action_double
+    <<: *mqtt_trigger
+
+conditions: []
+
+actions:
+  - action: pyscript.light_multi_switch
+    metadata: {}
+    data:
+      entity_ids: !input lights
+      event_id: "{{ trigger.id }}"
+
+mode: single

@@ -3,28 +3,41 @@ import asyncio
 from stubs.pyscript_builtins import log, service, task
 from stubs.pyscript_generated import light
 
-task_by_entity: dict[str, asyncio.Task] = {}
+
+class TimerState:
+    entity_id: str
+    duration: int
+    task: asyncio.Task | None
 
 
-def turn_off_light_after(entity_id: str, duration: int):
-    log.info('Scheduling to turn of %r after %d minutes.', entity_id, duration)
-    task.sleep(duration * 60)
-    log.info('Timer expired, turning off %r.', entity_id)
-    light.turn_off(entity_id=entity_id)
-    del task_by_entity[entity_id]
+state_by_instance: dict[str, TimerState] = {}
 
 
-def run(entity_id: str, new_state: str, duration: int):
-    # whenever state switched we will not continue with an existing timer task:
-    if entity_task := task_by_entity.get(entity_id):
-        log.info('Cancelling timer to turn of %r.', entity_id)
-        task.cancel(entity_task)
-        del task_by_entity[entity_id]
-
-    if new_state == 'on':
-        task_by_entity[entity_id] = task.create(turn_off_light_after, entity_id, duration)
+def turn_off_light_after(state: TimerState):
+    log.info('Scheduling to turn off %r after %d minutes.', state.entity_id, state.duration)
+    task.sleep(state.duration * 60)
+    log.info('Timer expired, turning off %r.', state.entity_id)
+    light.turn_off(entity_id=state.entity_id)
+    state.task = None
 
 
 @service
-def light_timer(entity_id: str, new_state: str, duration: int):
-    run(entity_id, new_state, duration)
+def light_timer(automation_id: str, entity_id: str, duration: int, new_state: str):
+    # Get or create state for this automation instance with configuration parameters
+    if not (state := state_by_instance.get(automation_id)):
+        state = TimerState()
+        state_by_instance[automation_id] = state
+
+        state.entity_id = entity_id
+        state.duration = duration
+        state.task = None
+
+    # Cancel existing timer task if any
+    if state.task:
+        log.info('Cancelling timer to turn off %r.', entity_id)
+        task.cancel(state.task)
+        state.task = None
+
+    # Process trigger parameter (new_state)
+    if new_state == 'on':
+        state.task = task.create(turn_off_light_after, state)
