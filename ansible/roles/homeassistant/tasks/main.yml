@@ -1,0 +1,13 @@
+- name: Sync Home Assistant configuration files
+  ansible.posix.synchronize:
+    src: "{{ playbook_dir }}/../../homeassistant-config/"
+    dest: "{{ homeassistant_config_path }}/"
+    delete: false
+    checksum: true
+    recursive: true
+    rsync_opts:
+      - "--omit-dir-times"
+      - "--no-perms"
+      - "--no-owner"
+      - "--no-group"
+      - "--no-times"
