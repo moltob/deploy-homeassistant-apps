@@ -25,6 +25,7 @@ def turn_off_light_after(state: TimerState):
 def light_timer(automation_id: str, entity_id: str, duration: int, new_state: str):
     # Get or create state for this automation instance with configuration parameters
     if not (state := state_by_instance.get(automation_id)):
+        log.info('Initializing for automation %r.', automation_id)
         state = TimerState()
         state_by_instance[automation_id] = state
 

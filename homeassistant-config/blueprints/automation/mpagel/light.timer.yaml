@@ -30,7 +30,7 @@ actions:
   - action: pyscript.light_timer
     metadata: {}
     data:
-      automation_id: "{{ this.name }}"
+      automation_id: "{{ this.entity_id }}"
       entity_id: !input light
       duration: !input duration
       new_state: "{{ trigger.to_state.state }}"

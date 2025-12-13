@@ -15,13 +15,13 @@
 - In blueprint `actions` section, call PyScript service: `action: pyscript.my_service`
 - Pass data via `data:` block using `!input` tags to reference blueprint inputs
 - Use Jinja2 templates for dynamic values from triggers: `"{{ trigger.id }}"`, `"{{ trigger.to_state.state }}"`
-- Use `this` template variable to access automation context: `"{{ this.name }}"` ([docs](https://www.home-assistant.io/docs/automation/templating/#available-state-data))
+- Use `this` template variable to access automation context: `"{{ this.entity_id }}"` ([docs](https://www.home-assistant.io/docs/automation/templating/#available-state-data))
 - Example:
   ```yaml
   actions:
     - action: pyscript.light_multi_switch
       data:
-        automation_id: "{{ this.name }}"
+        automation_id: "{{ this.entity_id }}"
         entity_ids: !input lights
         event_id: "{{ trigger.id }}"
   ```
