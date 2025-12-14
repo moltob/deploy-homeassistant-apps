@@ -1,0 +1,125 @@
+blueprint:
+  name: Climate Control
+  description:
+    Control a radiator/climate device based on external temperature sensor, window states, and
+    comfort/eco time schedules. Automatically adjusts target temperature with offset compensation
+    when actual room temperature differs from the device's internal sensor.
+  domain: automation
+  input:
+    radiator:
+      name: Radiator/Climate Device
+      description: The climate entity to control (e.g., radiator thermostat).
+      selector:
+        entity:
+          domain: climate
+    temperature_sensor:
+      name: Temperature Sensor
+      description:
+        External temperature sensor for accurate room temperature measurement.
+      selector:
+        entity:
+          domain: sensor
+          device_class: temperature
+    windows:
+      name: Window Sensors
+      description: Window/door sensors that should turn off heating when open.
+      selector:
+        entity:
+          domain: binary_sensor
+          device_class:
+            - window
+            - door
+          multiple: true
+    # Input helpers for runtime-adjustable parameters
+    # Create these in configuration.yaml or via UI:
+    #
+    # input_number:
+    #   bedroom_comfort_temp:
+    #     name: Bedroom Comfort Temperature
+    #     min: 15
+    #     max: 25
+    #     step: 0.5
+    #     initial: 21
+    #     unit_of_measurement: "°C"
+    #     icon: mdi:thermometer
+    #   bedroom_eco_temp:
+    #     name: Bedroom Eco Temperature
+    #     min: 10
+    #     max: 20
+    #     step: 0.5
+    #     initial: 18
+    #     unit_of_measurement: "°C"
+    #     icon: mdi:thermometer-low
+    #
+    # input_datetime:
+    #   bedroom_comfort_start:
+    #     name: Bedroom Comfort Start Time
+    #     has_date: false
+    #     has_time: true
+    #     initial: "07:00:00"
+    #     icon: mdi:clock-start
+    #   bedroom_comfort_stop:
+    #     name: Bedroom Comfort Stop Time
+    #     has_date: false
+    #     has_time: true
+    #     initial: "22:00:00"
+    #     icon: mdi:clock-end
+    comfort_temp:
+      name: Comfort Temperature Input
+      description: Input helper for comfort mode target temperature.
+      selector:
+        entity:
+          domain: input_number
+    eco_temp:
+      name: Eco Temperature Input
+      description: Input helper for eco mode target temperature.
+      selector:
+        entity:
+          domain: input_number
+    comfort_start:
+      name: Comfort Start Time Input
+      description: Input helper for when comfort mode starts.
+      selector:
+        entity:
+          domain: input_datetime
+    comfort_stop:
+      name: Comfort Stop Time Input
+      description: Input helper for when comfort mode ends.
+      selector:
+        entity:
+          domain: input_datetime
+
+triggers:
+  - id: window_state_change
+    entity_id: !input windows
+    trigger: state
+  - id: comfort_temp_change
+    entity_id: !input comfort_temp
+    trigger: state
+  - id: eco_temp_change
+    entity_id: !input eco_temp
+    trigger: state
+  - id: comfort_start_change
+    entity_id: !input comfort_start
+    trigger: state
+  - id: comfort_stop_change
+    entity_id: !input comfort_stop
+    trigger: state
+  - id: periodic_check
+    trigger: time_pattern
+    minutes: "/15"
+
+conditions: []
+
+actions:
+  - action: pyscript.climate_control
+    data:
+      automation_id: "{{ this.entity_id }}"
+      radiator_id: !input radiator
+      temperature_sensor_id: !input temperature_sensor
+      window_ids: !input windows
+      comfort_temp_id: !input comfort_temp
+      eco_temp_id: !input eco_temp
+      comfort_start_id: !input comfort_start
+      comfort_stop_id: !input comfort_stop
+      trigger_id: "{{ trigger.id }}"

@@ -116,5 +116,75 @@ from stubs.pyscript_builtins import log, service, task
 from stubs.pyscript_generated import light
 ```
 
-### File Location
-Place PyScript files in: `platforms/pyscript-apps/src/apps/`
+### Runtime-Adjustable Parameters
+
+**Input Helpers (Recommended)**
+- Use Home Assistant input helpers for runtime-adjustable parameters
+- Pre-create input helpers in `configuration.yaml` or via UI
+- Reference them in blueprint using entity selectors
+- Users can modify values via dashboards
+- Pattern:
+  ```yaml
+  # In blueprint input section:
+  comfort_temp:
+    name: Comfort Temperature Input
+    selector:
+      entity:
+        domain: input_number
+
+  # In blueprint actions:
+  actions:
+    - action: pyscript.my_service
+      data:
+        comfort_temp_id: !input comfort_temp
+  ```
+
+  ```python
+  # In PyScript:
+  @service
+  def my_service(automation_id: str, comfort_temp_id: str, ...):
+      # Read current value from input helper
+      comfort_temp = float(state.get(comfort_temp_id))
+  ```
+
+**Creating Input Helpers in YAML**
+- Add to `configuration.yaml` or separate included file:
+  ```yaml
+  input_number:
+    bedroom_comfort_temp:
+      name: Bedroom Comfort Temperature
+      min: 15
+      max: 25
+      step: 0.5
+      initial: 21
+      unit_of_measurement: "°C"
+      icon: mdi:thermometer
+    bedroom_eco_temp:
+      name: Bedroom Eco Temperature
+      min: 10
+      max: 20
+      step: 0.5
+      initial: 18
+      unit_of_measurement: "°C"
+      icon: mdi:thermometer-low
+
+  input_datetime:
+    bedroom_comfort_start:
+      name: Bedroom Comfort Start Time
+      has_date: false
+      has_time: true
+      initial: "07:00:00"
+      icon: mdi:clock-start
+    bedroom_comfort_stop:
+      name: Bedroom Comfort Stop Time
+      has_date: false
+      has_time: true
+      initial: "22:00:00"
+      icon: mdi:clock-end
+  ```
+
+**When to Use Input Helpers**
+- Runtime-adjustable parameters (temperatures, schedules, thresholds)
+- Values that users change frequently via dashboards
+- Parameters that need validation constraints (min/max, step)
+- Want familiar HA UI configuration
