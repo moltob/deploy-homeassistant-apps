@@ -7,6 +7,7 @@ from stubs.pyscript_generated import climate
 
 
 class ClimateState:
+    automation_id: str
     radiator_id: str
     temperature_sensor_id: str
     window_ids: list[str]
@@ -36,6 +37,7 @@ def climate_control(
         climate_state = ClimateState()
         state_by_instance[automation_id] = climate_state
 
+        climate_state.automation_id = automation_id
         climate_state.radiator_id = radiator_id
         climate_state.temperature_sensor_id = temperature_sensor_id
         climate_state.window_ids = window_ids
@@ -45,13 +47,18 @@ def climate_control(
         climate_state.comfort_stop_id = comfort_stop_id
 
         log.info(
-            'Climate control initialized with radiator=%r, sensor=%r, %d windows.',
-            radiator_id,
+            '[%s] Climate control initialized with sensor=%r, %d windows.',
+            climate_state.automation_id,
             temperature_sensor_id,
             len(window_ids),
         )
 
-    log.info('Processing trigger %r for automation %r.', trigger_id, automation_id)
+    log.info(
+        '[%s] Processing trigger %r for automation %r.',
+        climate_state.automation_id,
+        trigger_id,
+        automation_id,
+    )
     control_radiator(climate_state)
 
 
@@ -94,7 +101,8 @@ def set_temperature(climate_state: ClimateState, target_temperature: float, reas
         set_mode = 'heat'
 
         log.info(
-            '%s: target = %s, apparent = %s, actual = %s, set = %s, mode=%r.',
+            '[%s] %s: target = %s, apparent = %s, actual = %s, set = %s, mode=%r.',
+            climate_state.automation_id,
             reason,
             target_temperature,
             apparent_temperature,
@@ -109,5 +117,5 @@ def set_temperature(climate_state: ClimateState, target_temperature: float, reas
             hvac_mode=set_mode,
         )
     else:
-        log.info('Turning radiator off.')
+        log.info('[%s] Turning radiator off.', climate_state.automation_id)
         climate.turn_off(entity_id=climate_state.radiator_id)

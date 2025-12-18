@@ -118,47 +118,47 @@ z2m_legacy_trigger:
 #     ent_sensor: sensor.livingroom_switch_floorlamps_couch_action_sim
 #     ent_actuator: light.livingroom_floorlamps_couch
 
-welcome_lights:
-  module: toggle
-  class: WelcomeLightApp
-  dependencies: dispatcher
-  constrain_start_time: sunset
-  constrain_end_time: sunrise
-  entities:
-    ent_light: light.livingroom_floorlamps_couch
-    ent_persons:
-      - person.britta_pagel
-      - person.mike_pagel
+# welcome_lights:
+#   module: toggle
+#   class: WelcomeLightApp
+#   dependencies: dispatcher
+#   constrain_start_time: sunset
+#   constrain_end_time: sunrise
+#   entities:
+#     ent_light: light.livingroom_floorlamps_couch
+#     ent_persons:
+#       - person.britta_pagel
+#       - person.mike_pagel
 
-dryer_observer:
-  module: power
-  class: PowerObserverApp
-  dependencies: dispatcher
-  entities:
-    ent_power: sensor.laundry_dryer_power
-  power:
-    active: 500
-    done: 10
-    duration_done: 1
-  notify:
-    service: mobile_app_all
-    title: Trocker
-    message: Der Trockner ist fertig.
+# dryer_observer:
+#   module: power
+#   class: PowerObserverApp
+#   dependencies: dispatcher
+#   entities:
+#     ent_power: sensor.laundry_dryer_power
+#   power:
+#     active: 500
+#     done: 10
+#     duration_done: 1
+#   notify:
+#     service: mobile_app_all
+#     title: Trocker
+#     message: Der Trockner ist fertig.
 
-washer_observer:
-  module: power
-  class: PowerObserverApp
-  dependencies: dispatcher
-  entities:
-    ent_power: sensor.laundry_washer_power
-  power:
-    active: 1000
-    done: 7
-    duration_done: 1.5
-  notify:
-    service: mobile_app_all
-    title: Waschmaschine
-    message: Die Waschmaschine ist fertig (hoffe ich).
+# washer_observer:
+#   module: power
+#   class: PowerObserverApp
+#   dependencies: dispatcher
+#   entities:
+#     ent_power: sensor.laundry_washer_power
+#   power:
+#     active: 1000
+#     done: 7
+#     duration_done: 1.5
+#   notify:
+#     service: mobile_app_all
+#     title: Waschmaschine
+#     message: Die Waschmaschine ist fertig (hoffe ich).
 
 # timer_guestbath_light:
 #   module: toggle
@@ -198,6 +198,7 @@ zigbee_availability_watchdog:
   dependencies: dispatcher
   notify:
     service: mobile_app_s22_mike
+
 # unifi_firewall_addressgroup_updater:
 #   module: unifi
 #   class: FirewallAddressGroupUpdaterApp
