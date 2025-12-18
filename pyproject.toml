@@ -28,6 +28,7 @@ members = ["platforms/*"]
 
 [tool.ruff]
 line-length = 100
+exclude = ["platforms/pyscript-apps/src/apps/modules/stubs"]
 
 [tool.ruff.lint]
 extend-select = [
@@ -68,7 +69,7 @@ extraPaths = ["platforms/appdaemon-apps/src/apps", "platforms/pyscript-apps/src/
 
 useLibraryCodeForTypes = true
 include = ["platforms/**/*.py"]
-exclude = ["**/node_modules", "**/__pycache__"]
+exclude = ["**/node_modules", "**/__pycache__", "platforms/appdaemon-apps", "platforms/pyscript-apps/src/apps/modules/stubs"]
 deprecateTypingAliases = true
 reportAssertAlwaysTrue = true
 reportCallInDefaultInitializer = true
