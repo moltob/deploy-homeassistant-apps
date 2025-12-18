@@ -192,12 +192,12 @@ z2m_legacy_trigger:
 #     ent_actuator: light.guestroom_lamp_nightstand
 #   minutes: 120
 
-zigbee_availability_watchdog:
-  module: watchdog
-  class: NotifyOfflineApp
-  dependencies: dispatcher
-  notify:
-    service: mobile_app_s22_mike
+# zigbee_availability_watchdog:
+#   module: watchdog
+#   class: NotifyOfflineApp
+#   dependencies: dispatcher
+#   notify:
+#     service: mobile_app_s22_mike
 
 # unifi_firewall_addressgroup_updater:
 #   module: unifi
