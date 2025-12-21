@@ -1,0 +1,82 @@
+blueprint:
+  name: Power Observer
+  description: Detect appliance done state from a power sensor and send a notification.
+  domain: automation
+  input:
+    power_sensor:
+      name: Power Sensor
+      description: Sensor that reports instantaneous power in Watts (e.g., smart plug).
+      selector:
+        entity:
+          domain: sensor
+          device_class: power
+    power_active_watts:
+      name: Active Threshold (W)
+      description: Power level that marks the appliance as running.
+      default: 500
+      selector:
+        number:
+          min: 0
+          max: 3500
+          step: 1
+          unit_of_measurement: W
+    power_done_watts:
+      name: Done Threshold (W)
+      description: Power level below which the appliance is considered done.
+      default: 10
+      selector:
+        number:
+          min: 0
+          max: 3500
+          step: 1
+          unit_of_measurement: W
+    duration_done_minutes:
+      name: Done Duration (minutes)
+      description: Minutes the power must stay below the done threshold before notifying.
+      default: 1
+      selector:
+        number:
+          min: 0
+          max: 30
+          step: 0.5
+          unit_of_measurement: min
+    notify_service:
+      name: Notify Service
+      description: Notify service to call when the appliance finishes.
+      default: mobile_app_all
+    notify_title:
+      name: Notification Title
+      description: Notification title to send when done.
+      default: Appliance
+      selector:
+        text:
+          type: text
+    notify_message:
+      name: Notification Message
+      description: Notification message to send when done.
+      default: Appliance cycle finished.
+      selector:
+        text:
+          type: text
+
+triggers:
+  - id: power_change
+    entity_id: !input power_sensor
+    trigger: state
+
+conditions: []
+
+actions:
+  - action: pyscript.power_observer
+    data:
+      automation_id: "{{ this.entity_id }}"
+      power_sensor_id: !input power_sensor
+      power_active_watts: !input power_active_watts
+      power_done_watts: !input power_done_watts
+      duration_done_minutes: !input duration_done_minutes
+      notify_service: !input notify_service
+      notify_title: !input notify_title
+      notify_message: !input notify_message
+      trigger_id: "{{ trigger.id }}"
+
+mode: single

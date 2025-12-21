@@ -1,0 +1,6 @@
+[project]
+name = "pyscript-apps"
+version = "0.1.0"
+description = "HA automations with pyscript"
+requires-python = ">=3.13.2"
+dependencies = ["homeassistant>=2025.11.3"]

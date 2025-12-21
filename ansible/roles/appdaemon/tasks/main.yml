@@ -7,7 +7,7 @@
 
 - name: Sync custom applications directory
   ansible.posix.synchronize:
-    src: "{{ playbook_dir }}/../../src/apps/"
+    src: "{{ playbook_dir }}/../../platforms/appdaemon-apps/src/apps/"
     dest: "{{ addon_configs_path }}/{{ appdaemon_addon_slug }}/apps/"
     delete: true
     checksum: true
@@ -17,4 +17,9 @@
       - "--exclude=.mypy_cache"
       - "--exclude=.pytest_cache"
       - "--exclude=.ruff_cache"
+      - "--omit-dir-times"
+      - "--no-perms"
+      - "--no-owner"
+      - "--no-group"
+      - "--no-times"
   notify: Restart AppDaemon

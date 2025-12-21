@@ -1,0 +1,14 @@
+- name: Sync PyScript applications
+  ansible.posix.synchronize:
+    src: "{{ playbook_dir }}/../../platforms/pyscript-apps/src/apps/"
+    dest: "{{ pyscript_path }}/"
+    delete: true
+    checksum: true
+    recursive: true
+    rsync_opts:
+      - "--exclude=__pycache__"
+      - "--omit-dir-times"
+      - "--no-perms"
+      - "--no-owner"
+      - "--no-group"
+      - "--no-times"

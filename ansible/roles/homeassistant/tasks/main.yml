@@ -1,0 +1,20 @@
+- name: Sync blueprints
+  ansible.posix.synchronize: &config-full-sync
+    src: "{{ playbook_dir }}/../../homeassistant-config/{{ subfolder }}/"
+    dest: "{{ homeassistant_config_path }}/{{ subfolder }}/"
+    delete: true
+    checksum: true
+    recursive: true
+    rsync_opts:
+      - "--omit-dir-times"
+      - "--no-perms"
+      - "--no-owner"
+      - "--no-group"
+      - "--no-times"
+  vars:
+    subfolder: blueprints/automation/mpagel
+
+- name: Sync packages
+  ansible.posix.synchronize: *config-full-sync
+  vars:
+    subfolder: packages

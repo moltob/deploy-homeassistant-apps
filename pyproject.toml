@@ -4,11 +4,12 @@ version = "0.1.0"
 description = "Homeassistant applications and configurations"
 dependencies = [
     "appdaemon-apps",
+    "pyright>=1.1.407",
+    "pyscript-apps",
 ]
 
 [dependency-groups]
 dev = [
-    "pyright>=1.1.391,!=1.1.401",
     "ruff>=0.9.1",
     "yamllint>=1.35.1",
     "ansible>=13.0.0",
@@ -16,6 +17,7 @@ dev = [
 
 [tool.uv.sources]
 "appdaemon-apps" = { workspace = true }
+"pyscript-apps" = { workspace = true }
 
 [tool.uv]
 # this is no package but a loose collection of files processed by AD:
@@ -26,6 +28,7 @@ members = ["platforms/*"]
 
 [tool.ruff]
 line-length = 100
+exclude = ["platforms/pyscript-apps/src/apps/modules/stubs"]
 
 [tool.ruff.lint]
 extend-select = [
@@ -55,13 +58,18 @@ lines-between-types = 1
 [tool.ruff.format]
 quote-style = "single"
 
+[tool.pyrefly]
+project-excludes = ["**/node_modules", "**/__pycache__"]
+search-path = ["platforms/pyscript-apps/src/apps/modules"]
+infer-with-first-use = false
+
 [tool.pyright]
 # mimic the funky import structure of HA:
-extraPaths = ["platforms/appdaemon-apps/src/apps"]
+extraPaths = ["platforms/appdaemon-apps/src/apps", "platforms/pyscript-apps/src/apps/modules"]
 
 useLibraryCodeForTypes = true
 include = ["platforms/**/*.py"]
-exclude = ["**/node_modules", "**/__pycache__"]
+exclude = ["**/node_modules", "**/__pycache__", "platforms/appdaemon-apps", "platforms/pyscript-apps/src/apps/modules/stubs"]
 deprecateTypingAliases = true
 reportAssertAlwaysTrue = true
 reportCallInDefaultInitializer = true
