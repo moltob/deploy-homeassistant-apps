@@ -1,5 +1,0 @@
-- name: Restart AppDaemon add-on
-  ansible.builtin.command:
-    cmd: ha addons restart {{ appdaemon_addon_slug }}
-  listen: Restart AppDaemon
-  changed_when: true  # Command always causes change when executed
