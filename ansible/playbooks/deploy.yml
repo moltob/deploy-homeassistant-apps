@@ -1,4 +1,4 @@
-- name: Deploy custom AppDaemon applications to Home Assistant
+- name: Deploy Home Assistant applications and configurations
   hosts: all
   gather_facts: false
 
@@ -7,5 +7,3 @@
       tags: homeassistant
     - role: pyscript
       tags: pyscript
-    - role: appdaemon
-      tags: appdaemon

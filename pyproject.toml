@@ -3,7 +3,6 @@ name = "homeassistant-apps"
 version = "0.1.0"
 description = "Homeassistant applications and configurations"
 dependencies = [
-    "appdaemon-apps",
     "pyright>=1.1.407",
     "pyscript-apps",
 ]
@@ -16,7 +15,6 @@ dev = [
 ]
 
 [tool.uv.sources]
-"appdaemon-apps" = { workspace = true }
 "pyscript-apps" = { workspace = true }
 
 [tool.uv]
@@ -65,11 +63,11 @@ infer-with-first-use = false
 
 [tool.pyright]
 # mimic the funky import structure of HA:
-extraPaths = ["platforms/appdaemon-apps/src/apps", "platforms/pyscript-apps/src/apps/modules"]
+extraPaths = ["platforms/pyscript-apps/src/apps/modules"]
 
 useLibraryCodeForTypes = true
 include = ["platforms/**/*.py"]
-exclude = ["**/node_modules", "**/__pycache__", "platforms/appdaemon-apps", "platforms/pyscript-apps/src/apps/modules/stubs"]
+exclude = ["**/node_modules", "**/__pycache__", "platforms/pyscript-apps/src/apps/modules"]
 deprecateTypingAliases = true
 reportAssertAlwaysTrue = true
 reportCallInDefaultInitializer = true
