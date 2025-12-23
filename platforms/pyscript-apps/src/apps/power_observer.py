@@ -166,6 +166,8 @@ def notify_after_delay(observer_state: PowerObserverState):
     )
     task.sleep(observer_state.duration_done_minutes * 60)
 
+    # this task is finished, so forget it:
+    observer_state.timer_task = None
     log.info('[%s] Timer expired: appliance is done.', observer_state.power_sensor_id)
 
     # Send notification - dynamically call the notify service method
@@ -177,6 +179,3 @@ def notify_after_delay(observer_state: PowerObserverState):
 
     # Transition to OFF state
     enter_state(observer_state, DeviceState.OFF)
-
-    # Clear timer task reference
-    observer_state.timer_task = None
