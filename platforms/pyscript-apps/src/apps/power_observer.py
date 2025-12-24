@@ -4,7 +4,6 @@ import asyncio
 import enum
 
 from stubs.pyscript_builtins import log, service, state, task
-from stubs.pyscript_generated import notify
 
 
 class DeviceState(enum.Enum):
@@ -76,7 +75,7 @@ def power_observer(
 
     power_str = state.get(power_sensor_id)
     if power_str == 'unavailable':
-        log.debug(
+        log.warning(
             '[%s] Power sensor %r unavailable, skipping processing.',
             observer_state.automation_id,
             observer_state.power_sensor_id,
@@ -101,12 +100,13 @@ def power_observer(
         )
         return
 
-    log.debug(
+    log.info(
         '[%s] Processing power %.2f W in state %s.',
         observer_state.automation_id,
         power,
         observer_state.device_state.value,
     )
+    log.info('Timer Task: %r', observer_state.timer_task)
 
     # State machine logic
     if observer_state.device_state is DeviceState.OFF:
@@ -127,9 +127,10 @@ def power_observer(
 
 def enter_state(observer_state: PowerObserverState, new_device_state: DeviceState):
     """Transition to a new device state, canceling any active timer."""
-    # Cancel timer if exists
+    # Cancel timer if exists and not yet finished
     if observer_state.timer_task:
-        task.cancel(observer_state.timer_task)
+        if not observer_state.timer_task.done():
+            task.cancel(observer_state.timer_task)
         observer_state.timer_task = None
 
     # Update internal state
@@ -171,8 +172,9 @@ def notify_after_delay(observer_state: PowerObserverState):
     log.info('[%s] Timer expired: appliance is done.', observer_state.power_sensor_id)
 
     # Send notification - dynamically call the notify service method
-    notify_method = getattr(notify, observer_state.notify_service)
-    notify_method(
+    service.call(  # pyright: ignore[reportFunctionMemberAccess]  # incomplete pyscript typing
+        'notify',
+        observer_state.notify_service,
         title=observer_state.notify_title,
         message=observer_state.notify_message,
     )
