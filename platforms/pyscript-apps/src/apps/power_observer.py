@@ -143,7 +143,7 @@ def enter_state(observer_state: PowerObserverState, new_device_state: DeviceStat
     # Log transition
     log.info(
         '[%s] State transition: %s -> %s',
-        observer_state.power_sensor_id,
+        observer_state.automation_id,
         old_state.value,
         new_device_state.value,
     )
