@@ -9,6 +9,8 @@ from stubs.pyscript_generated import climate
 class ClimateState:
     automation_id: str
     radiator_id: str
+    min_temp_setpoint: float
+    supports_hvac_off: bool
     temperature_sensor_id: str
     window_ids: list[str]
     comfort_temp_id: str
@@ -37,8 +39,14 @@ def climate_control(
         climate_state = ClimateState()
         state_by_instance[automation_id] = climate_state
 
+        radiator_attrs = state.getattr(radiator_id)
+        assert radiator_attrs, 'radiator has attributes'
+
         climate_state.automation_id = automation_id
         climate_state.radiator_id = radiator_id
+        climate_state.min_temp_setpoint = float(radiator_attrs.get('min_temp', 5))
+        hvac_modes = radiator_attrs.get('hvac_modes', [])
+        climate_state.supports_hvac_off = 'off' in hvac_modes
         climate_state.temperature_sensor_id = temperature_sensor_id
         climate_state.window_ids = window_ids
         climate_state.comfort_temp_id = comfort_temp_id
@@ -47,10 +55,11 @@ def climate_control(
         climate_state.comfort_stop_id = comfort_stop_id
 
         log.info(
-            '[%s] Climate control initialized with sensor=%r, %d windows.',
+            '[%s] Climate control initialized with sensor=%r, %d windows, supports_hvac_off=%r.',
             climate_state.automation_id,
             temperature_sensor_id,
             len(window_ids),
+            climate_state.supports_hvac_off,
         )
 
     log.info(
@@ -116,6 +125,17 @@ def set_temperature(climate_state: ClimateState, target_temperature: float, reas
             temperature=set_temperature,
             hvac_mode=set_mode,
         )
-    else:
+    elif climate_state.supports_hvac_off:
         log.info('[%s] Turning radiator off.', climate_state.automation_id)
         climate.turn_off(entity_id=climate_state.radiator_id)
+    else:
+        log.info(
+            '[%s] No HVAC off mode; using min setpoint %s.',
+            climate_state.automation_id,
+            climate_state.min_temp_setpoint,
+        )
+        climate.set_temperature(
+            entity_id=climate_state.radiator_id,
+            temperature=climate_state.min_temp_setpoint,
+            hvac_mode='heat',
+        )
