@@ -1,4 +1,4 @@
-# Copilot Instructions
+# Agent Instructions
 
 ## PyScript Development Guidelines
 
@@ -28,8 +28,8 @@
 
 **PyScript Service Function Receives Data**
 - Service function parameters match the keys in blueprint's `data:` block
-- Single entity input → `str` (entity ID)
-- Multiple entity input → `list[str]` (list of entity IDs)
+- Single entity input -> `str` (entity ID)
+- Multiple entity input -> `list[str]` (list of entity IDs)
 - Example:
   ```python
   @service
