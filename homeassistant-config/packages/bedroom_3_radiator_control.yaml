@@ -20,12 +20,10 @@ input_datetime:
     name: Bedroom 3 Time Comfort Start
     has_date: false
     has_time: true
-    initial: "10:00:00"
     icon: mdi:clock-start
 
   bedroom_3_comfort_stop:
     name: Bedroom 3 Time Comfort Stop
     has_date: false
     has_time: true
-    initial: "20:00:00"
     icon: mdi:clock-end
