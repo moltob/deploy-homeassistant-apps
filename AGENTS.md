@@ -204,7 +204,6 @@ from stubs.pyscript_generated import light
       min: 15
       max: 25
       step: 0.5
-      initial: 21
       unit_of_measurement: "°C"
       icon: mdi:thermometer
     bedroom_eco_temp:
@@ -212,7 +211,6 @@ from stubs.pyscript_generated import light
       min: 10
       max: 20
       step: 0.5
-      initial: 18
       unit_of_measurement: "°C"
       icon: mdi:thermometer-low
 
@@ -221,13 +219,11 @@ from stubs.pyscript_generated import light
       name: Bedroom Comfort Start Time
       has_date: false
       has_time: true
-      initial: "07:00:00"
       icon: mdi:clock-start
     bedroom_comfort_stop:
       name: Bedroom Comfort Stop Time
       has_date: false
       has_time: true
-      initial: "22:00:00"
       icon: mdi:clock-end
   ```
 

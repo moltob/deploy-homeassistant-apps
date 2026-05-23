@@ -20,12 +20,10 @@ input_datetime:
     name: TV Room Time Comfort Start
     has_date: false
     has_time: true
-    initial: "10:00:00"
     icon: mdi:clock-start
 
   tv_room_comfort_stop:
     name: TV Room Time Comfort Stop
     has_date: false
     has_time: true
-    initial: "20:00:00"
     icon: mdi:clock-end
