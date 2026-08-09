@@ -40,10 +40,14 @@ blueprint:
           max: 30
           step: 0.5
           unit_of_measurement: min
-    notify_service:
-      name: Notify Service
-      description: Notify service to call when the appliance finishes.
-      default: mobile_app_all
+    notify_entity:
+      name: Notification Entity
+      description: Notification entity to send the message to when the appliance finishes.
+      default: notify.telegram_recipients
+      selector:
+        entity:
+          filter:
+            - domain: notify
     notify_title:
       name: Notification Title
       description: Notification title to send when done.
@@ -74,7 +78,7 @@ actions:
       power_active_watts: !input power_active_watts
       power_done_watts: !input power_done_watts
       duration_done_minutes: !input duration_done_minutes
-      notify_service: !input notify_service
+      notify_entity_id: !input notify_entity
       notify_title: !input notify_title
       notify_message: !input notify_message
       trigger_id: "{{ trigger.id }}"
