@@ -4,6 +4,7 @@ import asyncio
 import enum
 
 from stubs.pyscript_builtins import log, service, state, task
+from stubs.pyscript_generated import notify
 
 
 class DeviceState(enum.Enum):
@@ -18,7 +19,7 @@ class PowerObserverState:
     power_active_watts: float
     power_done_watts: float
     duration_done_minutes: float
-    notify_service: str
+    notify_entity_id: str
     notify_title: str
     notify_message: str
 
@@ -37,7 +38,7 @@ def power_observer(
     power_active_watts: float,
     power_done_watts: float,
     duration_done_minutes: float,
-    notify_service: str,
+    notify_entity_id: str,
     notify_title: str,
     notify_message: str,
     trigger_id: str,
@@ -54,7 +55,7 @@ def power_observer(
         observer_state.power_active_watts = power_active_watts
         observer_state.power_done_watts = power_done_watts
         observer_state.duration_done_minutes = duration_done_minutes
-        observer_state.notify_service = notify_service
+        observer_state.notify_entity_id = notify_entity_id
         observer_state.notify_title = notify_title
         observer_state.notify_message = notify_message
 
@@ -171,10 +172,9 @@ def notify_after_delay(observer_state: PowerObserverState):
     observer_state.timer_task = None
     log.info('[%s] Timer expired: appliance is done.', observer_state.power_sensor_id)
 
-    # Send notification - dynamically call the notify service method
-    service.call(  # pyright: ignore[reportFunctionMemberAccess]  # incomplete pyscript typing
-        'notify',
-        observer_state.notify_service,
+    # Send notification via the configured notify entity
+    notify.send_message(
+        entity_id=observer_state.notify_entity_id,
         title=observer_state.notify_title,
         message=observer_state.notify_message,
     )
